@@ -693,7 +693,18 @@
 
         <!-- PAGE: SETTINGS -->
         <div id="page-settings" class="page">
-            <div class="section-title">App Info & Storage</div>
+            
+            <!-- NEW AI SETTINGS SECTION -->
+            <div class="section-title">AI Configuration</div>
+            <div class="card">
+                <p style="font-size:14px; color:var(--text-secondary); margin-bottom:12px;">
+                    To use the AI Assistant on your phone, you need a free Gemini API Key from Google.
+                </p>
+                <input type="password" id="settings-api-key" placeholder="Paste Gemini API Key here" oninput="saveApiKey()">
+                <button class="btn" style="width:100%; margin-top:8px;" onclick="window.open('https://aistudio.google.com/app/apikey', '_blank')">🔑 Get Free API Key</button>
+            </div>
+
+            <div class="section-title" style="margin-top:24px;">App Info & Storage</div>
             <div class="card">
                 <p style="font-size:14px; color:var(--text-secondary); margin-bottom:12px;">
                     Data is stored locally on your device via browser storage. No cloud sync.
@@ -878,7 +889,8 @@
         goals: JSON.parse(JSON.stringify(DEFAULT_GOALS)),
         weekPlan: JSON.parse(JSON.stringify(DEFAULT_WEEK_PLAN)),
         currentDate: '', // YYYY-MM-DD
-        customLogo: null
+        customLogo: null,
+        geminiApiKey: '' // New setting for API key
     };
 
     let draftMealItems = {}; // foodId -> servings
@@ -887,10 +899,20 @@
     let currentGoalTab = 'GYM_POOL';
 
     // --- GEMINI API INTEGRATION ---
-    const apiKey = "";
+    const envApiKey = ""; // Environment provided key (works only in preview)
 
     async function fetchGeminiWithRetry(prompt, schema, maxRetries = 5) {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+        let activeKey = appData.geminiApiKey;
+        // Fallback to environment key if the user hasn't set one and is using the preview
+        if (!activeKey && typeof envApiKey !== 'undefined' && envApiKey !== "") {
+            activeKey = envApiKey;
+        }
+
+        if (!activeKey) {
+            throw new Error("API_KEY_MISSING");
+        }
+
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${activeKey}`;
         const payload = {
             contents: [{ parts: [{ text: prompt }] }],
             generationConfig: {
@@ -910,7 +932,7 @@
                 const data = await response.json();
                 return JSON.parse(data.candidates[0].content.parts[0].text);
             } catch (e) {
-                if (i === maxRetries - 1) throw e;
+                if (e.message === "API_KEY_MISSING" || i === maxRetries - 1) throw e;
                 await new Promise(res => setTimeout(res, delays[i]));
             }
         }
@@ -924,6 +946,11 @@
     }
 
     async function aiAutoLog() {
+        if (!appData.geminiApiKey && (!envApiKey || envApiKey === "")) {
+            navTo('settings');
+            return showAiMessage("Please add your free Gemini API Key in Settings first!", true);
+        }
+
         const input = document.getElementById('ai-input').value;
         if(!input) return showAiMessage("Please describe what you ate first!", true);
         
@@ -985,13 +1012,23 @@
             
         } catch (err) {
             console.error(err);
-            showAiMessage("Failed to analyze food. Please try again.", true);
+            if(err.message === "API_KEY_MISSING") {
+                navTo('settings');
+                showAiMessage("Please add your Gemini API Key in Settings first!", true);
+            } else {
+                showAiMessage("Failed to analyze food. Please check your API key and try again.", true);
+            }
         } finally {
             document.getElementById('ai-loading').style.display = 'none';
         }
     }
 
     async function aiAddFood() {
+        if (!appData.geminiApiKey && (!envApiKey || envApiKey === "")) {
+            navTo('settings');
+            return showAiMessage("Please add your free Gemini API Key in Settings first!", true);
+        }
+
         const input = document.getElementById('ai-input').value;
         if(!input) return showAiMessage("Please specify the food you want to add (e.g., 'Add fried chicken, 150g, meats').", true);
 
@@ -1042,7 +1079,12 @@
             
         } catch (err) {
             console.error(err);
-            showAiMessage("Failed to add food. Please try again.", true);
+            if(err.message === "API_KEY_MISSING") {
+                navTo('settings');
+                showAiMessage("Please add your Gemini API Key in Settings first!", true);
+            } else {
+                showAiMessage("Failed to add food. Please check your API key and try again.", true);
+            }
         } finally {
             document.getElementById('ai-loading').style.display = 'none';
         }
@@ -1062,6 +1104,11 @@
         ensureDayExists(appData.currentDate);
         saveData();
         
+        // Restore API Key in Settings if saved
+        if (appData.geminiApiKey) {
+            document.getElementById('settings-api-key').value = appData.geminiApiKey;
+        }
+
         updateLogoUI();
         renderAll();
     }
@@ -1087,6 +1134,12 @@
     function saveData() {
         localStorage.setItem('chiral_appData', JSON.stringify(appData));
         updateGlobalUI();
+    }
+    
+    // --- SETTINGS LOGIC ADDITIONS ---
+    function saveApiKey() {
+        appData.geminiApiKey = document.getElementById('settings-api-key').value.trim();
+        saveData();
     }
 
     // --- CORE UI UPDATES ---
