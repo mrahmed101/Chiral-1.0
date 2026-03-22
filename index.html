@@ -700,8 +700,12 @@
                 <p style="font-size:14px; color:var(--text-secondary); margin-bottom:12px;">
                     To use the AI Assistant on your phone, you need a free Gemini API Key from Google.
                 </p>
-                <input type="password" id="settings-api-key" placeholder="Paste Gemini API Key here" oninput="saveApiKey()">
-                <button class="btn" style="width:100%; margin-top:8px;" onclick="window.open('https://aistudio.google.com/app/apikey', '_blank')">🔑 Get Free API Key</button>
+                <div style="display: flex; gap: 8px;">
+                    <input type="password" id="settings-api-key" placeholder="Paste Gemini API Key here" style="flex: 1; margin-bottom: 0;">
+                    <button class="btn btn-primary" onclick="saveApiKeyBtn()">Save</button>
+                </div>
+                <div id="api-key-status" style="display:none; color:var(--color-pro); font-size:12px; margin-top:8px;">✅ API Key saved!</div>
+                <button class="btn" style="width:100%; margin-top:12px;" onclick="window.open('https://aistudio.google.com/app/apikey', '_blank')">🔑 Get Free API Key</button>
             </div>
 
             <div class="section-title" style="margin-top:24px;">App Info & Storage</div>
@@ -912,7 +916,10 @@
             throw new Error("API_KEY_MISSING");
         }
 
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${activeKey}`;
+        // Ensure we use a public model version when using a personal key!
+        const modelName = activeKey === envApiKey ? "gemini-2.5-flash-preview-09-2025" : "gemini-1.5-flash";
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${activeKey}`;
+        
         const payload = {
             contents: [{ parts: [{ text: prompt }] }],
             generationConfig: {
@@ -1137,9 +1144,15 @@
     }
     
     // --- SETTINGS LOGIC ADDITIONS ---
-    function saveApiKey() {
+    function saveApiKeyBtn() {
         appData.geminiApiKey = document.getElementById('settings-api-key').value.trim();
         saveData();
+        
+        const statusEl = document.getElementById('api-key-status');
+        statusEl.style.display = 'block';
+        setTimeout(() => {
+            statusEl.style.display = 'none';
+        }, 3000);
     }
 
     // --- CORE UI UPDATES ---
