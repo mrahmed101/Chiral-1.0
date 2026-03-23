@@ -466,6 +466,7 @@
         .footer-col:last-child { border-right: none; }
         .footer-val { font-size: 18px; font-weight: 800; }
         .footer-lbl { font-size: 10px; font-weight: 600; text-transform: uppercase; margin-top: 2px; color: var(--text-secondary); }
+        .footer-goal { font-size: 11px; color: var(--text-secondary); font-weight: 600; margin-left: 2px; }
 
         /* Modals */
         .modal-overlay {
@@ -639,13 +640,28 @@
             <!-- AI Assistant Card (Anchored to bottom) -->
             <div class="card ai-card">
                 <div class="ai-title">✨ AI Assistant</div>
-                <textarea id="ai-input" rows="2" placeholder="Describe a meal you ate OR ask to add a new food (e.g., 'Add fried chicken, 150g, meats')"></textarea>
-                <div class="flex-row">
-                    <button class="btn ai-btn flex-1" onclick="aiAutoLog()">✨ Auto-Log Meal</button>
-                    <button class="btn ai-btn flex-1" onclick="aiAddFood()">✨ Add to Library</button>
+                
+                <div style="position: relative; margin-bottom: 12px;">
+                    <textarea id="ai-input" rows="2" placeholder="Ask a question, describe a meal, or upload a photo..." style="margin-bottom: 0; padding-right: 40px;"></textarea>
+                    <button onclick="document.getElementById('ai-img-upload').click()" style="position: absolute; right: 8px; bottom: 8px; background: rgba(255,255,255,0.1); border: none; border-radius: 6px; padding: 4px 8px; font-size: 16px; cursor: pointer;">📷</button>
                 </div>
+                
+                <input type="file" id="ai-img-upload" accept="image/*" style="display:none;" onchange="handleAiImageUpload(event)">
+                
+                <div id="ai-img-preview-container" style="display:none; position: relative; width: 60px; height: 60px; margin-bottom: 12px;">
+                    <img id="ai-img-preview" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px; border: 1px solid var(--color-accent);">
+                    <button style="position: absolute; top: -5px; right: -5px; background: var(--color-fat); color: white; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center;" onclick="clearAiImage()">✖</button>
+                    <input type="hidden" id="ai-img-data">
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+                    <button class="btn ai-btn" onclick="aiAutoLog()">✨ Auto-Log Meal</button>
+                    <button class="btn ai-btn" onclick="aiAddFood()">✨ Add to Library</button>
+                </div>
+                <button class="btn ai-btn" style="width: 100%;" onclick="aiAsk()">💬 Ask AI (Nutrition Q&A)</button>
+                
                 <div id="ai-loading" class="ai-loading">Thinking...</div>
-                <div id="ai-message" style="display:none; margin-top:12px; font-size:13px; color:#fff; background:rgba(255,255,255,0.05); padding:8px; border-radius:6px; line-height:1.4;"></div>
+                <div id="ai-message" style="display:none; margin-top:12px; font-size:13px; color:#fff; background:rgba(255,255,255,0.05); padding:8px; border-radius:6px; line-height:1.4; white-space: pre-wrap;"></div>
             </div>
 
         </div>
@@ -783,19 +799,19 @@
     <!-- Footer -->
     <footer>
         <div class="footer-col">
-            <div class="footer-val c-cal" id="foot-cal">0</div>
+            <div class="footer-val c-cal"><span id="foot-cal">0</span><span class="footer-goal" id="foot-goal-cal">/ 0</span></div>
             <div class="footer-lbl">Cal</div>
         </div>
         <div class="footer-col">
-            <div class="footer-val c-pro" id="foot-pro">0</div>
+            <div class="footer-val c-pro"><span id="foot-pro">0</span><span class="footer-goal" id="foot-goal-pro">/ 0</span></div>
             <div class="footer-lbl">Pro</div>
         </div>
         <div class="footer-col">
-            <div class="footer-val c-carbs" id="foot-carbs">0</div>
+            <div class="footer-val c-carbs"><span id="foot-carbs">0</span><span class="footer-goal" id="foot-goal-carbs">/ 0</span></div>
             <div class="footer-lbl">Carbs</div>
         </div>
         <div class="footer-col">
-            <div class="footer-val c-fat" id="foot-fat">0</div>
+            <div class="footer-val c-fat"><span id="foot-fat">0</span><span class="footer-goal" id="foot-goal-fat">/ 0</span></div>
             <div class="footer-lbl">Fat</div>
         </div>
     </footer>
@@ -961,6 +977,25 @@
 
     // --- GEMINI API INTEGRATION ---
     const envApiKey = ""; // Environment provided key (works only in preview)
+    
+    function handleAiImageUpload(e) {
+        const file = e.target.files[0];
+        if(!file) return;
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const dataUrl = event.target.result;
+            document.getElementById('ai-img-data').value = dataUrl;
+            document.getElementById('ai-img-preview').src = dataUrl;
+            document.getElementById('ai-img-preview-container').style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    }
+    
+    function clearAiImage() {
+        document.getElementById('ai-img-data').value = '';
+        document.getElementById('ai-img-preview-container').style.display = 'none';
+        document.getElementById('ai-img-upload').value = '';
+    }
 
     // Fetches dynamically which models the user's specific API key has access to!
     async function fetchAvailableModels() {
@@ -1080,6 +1115,51 @@
         }
     }
 
+    async function fetchGeminiChat(prompt, base64Image = null, maxRetries = 5) {
+        let activeKey = appData.geminiApiKey;
+        if (!activeKey && typeof envApiKey !== 'undefined' && envApiKey !== "") activeKey = envApiKey;
+        if (!activeKey) throw new Error("API_KEY_MISSING");
+
+        let modelName = appData.geminiModel || "gemini-1.5-flash"; 
+        if (activeKey === envApiKey) modelName = "gemini-2.5-flash-preview-09-2025";
+
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${activeKey}`;
+        
+        let parts = [{ text: prompt + "\n\nYou are a concise, helpful nutrition expert. Keep your answer short and practical." }];
+        
+        if (base64Image) {
+            const commaIdx = base64Image.indexOf(',');
+            const mimeMatch = base64Image.match(/^data:(image\/[a-z]+);base64,/);
+            const mimeType = mimeMatch ? mimeMatch[1] : "image/jpeg";
+            const b64Data = commaIdx !== -1 ? base64Image.substring(commaIdx + 1) : base64Image;
+            parts.push({ inlineData: { mimeType: mimeType, data: b64Data } });
+        }
+
+        const payload = { contents: [{ parts: parts }] };
+        
+        const delays = [1000, 2000, 4000, 8000, 16000];
+        for (let i = 0; i < maxRetries; i++) {
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (!response.ok) {
+                    let errMsg = `HTTP Error ${response.status}`;
+                    try { const errData = await response.json(); errMsg = errData.error.message; } catch(e) {}
+                    throw new Error(errMsg);
+                }
+                const data = await response.json();
+                return data.candidates[0].content.parts[0].text;
+            } catch (e) {
+                if (e.message === "API_KEY_MISSING" || e.message.includes("API key not valid") || i === maxRetries - 1) throw e;
+                await new Promise(res => setTimeout(res, delays[i]));
+            }
+        }
+    }
+
     function showAiMessage(msg, isError = false) {
         const msgBox = document.getElementById('ai-message');
         msgBox.style.display = 'block';
@@ -1165,60 +1245,24 @@
         }
     }
 
-    async function aiAddFood() {
+    async function aiAsk() {
         if (!appData.geminiApiKey && (!envApiKey || envApiKey === "")) {
             navTo('settings');
             return showAiMessage("Please add your free Gemini API Key in Settings first!", true);
         }
 
         const input = document.getElementById('ai-input').value;
-        if(!input) return showAiMessage("Please specify the food you want to add (e.g., 'Add fried chicken, 150g, meats').", true);
+        const imgData = document.getElementById('ai-img-data').value;
+        
+        if(!input && !imgData) return showAiMessage("Please ask a question or upload a photo first!", true);
 
         document.getElementById('ai-loading').style.display = 'block';
-        document.getElementById('ai-loading').innerText = '✨ Calculating macros and adding to library...';
+        document.getElementById('ai-loading').innerText = '✨ Analyzing...';
         document.getElementById('ai-message').style.display = 'none';
 
-        const schema = {
-            type: "OBJECT",
-            properties: {
-                name: { type: "STRING" },
-                emoji: { type: "STRING" },
-                weight: { type: "NUMBER", description: "Base serving size in grams mentioned or inferred" },
-                calories: { type: "NUMBER" },
-                protein: { type: "NUMBER" },
-                carbs: { type: "NUMBER" },
-                fat: { type: "NUMBER" },
-                category: { type: "STRING", description: "Must be: Fruits, Vegetables, Meats, Dairy, Breads, Grains, Fats, or Other" }
-            },
-            required: ["name", "emoji", "weight", "calories", "protein", "carbs", "fat", "category"]
-        };
-
-        const prompt = `You are a nutrition expert. The user wants to add a new food to their database: "${input}". 
-        Provide a realistic nutritional breakdown for this food. If they didn't specify a weight, assume a standard serving size (e.g., 100g or a standard portion) and base the macros on that weight. Make sure to assign a fun emoji and categorize it properly.`;
-
         try {
-            const result = await fetchGeminiWithRetry(prompt, schema);
-            
-            const newFood = {
-                id: 'custom_' + Date.now(),
-                name: result.name,
-                weight: result.weight,
-                calories: result.calories,
-                protein: result.protein,
-                carbs: result.carbs,
-                fat: result.fat,
-                category: result.category || 'Other',
-                photoType: 'emoji',
-                photo: result.emoji || '🍽️'
-            };
-            
-            appData.foods.push(newFood);
-            document.getElementById('ai-input').value = '';
-            saveData();
-            renderAll();
-            
-            showAiMessage(`✨ Added "${result.name}" (${result.weight}g, ${Math.round(result.calories)} cal) to your Food Library! You can now find it in the list below.`);
-            
+            const result = await fetchGeminiChat(input || "Can you estimate the macros for this food?", imgData);
+            showAiMessage("💬 " + result);
         } catch (err) {
             console.error(err);
             if(err.message === "API_KEY_MISSING") {
@@ -1342,9 +1386,16 @@
 
         // Update Footer
         document.getElementById('foot-cal').textContent = Math.round(totals.cal);
+        document.getElementById('foot-goal-cal').textContent = ' / ' + Math.round(goal.calories);
+        
         document.getElementById('foot-pro').textContent = Math.round(totals.pro);
+        document.getElementById('foot-goal-pro').textContent = ' / ' + Math.round(goal.protein);
+        
         document.getElementById('foot-carbs').textContent = Math.round(totals.carbs);
+        document.getElementById('foot-goal-carbs').textContent = ' / ' + Math.round(goal.carbs);
+        
         document.getElementById('foot-fat').textContent = Math.round(totals.fat);
+        document.getElementById('foot-goal-fat').textContent = ' / ' + Math.round(goal.fat);
 
         // Update Progress Bars
         const pCal = Math.min(100, (totals.cal / goal.calories) * 100) || 0;
