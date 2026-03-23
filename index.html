@@ -731,13 +731,16 @@
             <div class="section-title">AI Configuration</div>
             <div class="card">
                 <p style="font-size:14px; color:var(--text-secondary); margin-bottom:12px;">
-                    To use the AI Assistant on your phone, you need a free Gemini API Key from Google.
+                    Paste your free Gemini API Key, then hit <strong>Verify & Load Models</strong> to automatically fetch models supported by your key!
                 </p>
-                <div style="display: flex; gap: 8px;">
-                    <input type="password" id="settings-api-key" placeholder="Paste Gemini API Key here" style="flex: 1; margin-bottom: 0;">
-                    <button class="btn btn-primary" onclick="saveApiKeyBtn()">Save</button>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <input type="password" id="settings-api-key" placeholder="Paste Gemini API Key here" style="margin-bottom: 0;">
+                    <button class="btn btn-primary" onclick="fetchAvailableModels()">Verify & Load Models</button>
+                    <select id="settings-model-name" onchange="updateSelectedModel()" style="margin-bottom: 0;">
+                        <option value="gemini-1.5-flash">gemini-1.5-flash</option>
+                    </select>
                 </div>
-                <div id="api-key-status" style="display:none; color:var(--color-pro); font-size:12px; margin-top:8px;">✅ API Key saved!</div>
+                <div id="api-key-status" style="display:none; font-size:13px; margin-top:12px; font-weight: 600;"></div>
                 <button class="btn" style="width:100%; margin-top:12px;" onclick="window.open('https://aistudio.google.com/app/apikey', '_blank')">🔑 Get Free API Key</button>
             </div>
 
@@ -947,7 +950,8 @@
         weekPlan: JSON.parse(JSON.stringify(DEFAULT_WEEK_PLAN)),
         currentDate: '', // YYYY-MM-DD
         customLogo: null,
-        geminiApiKey: '' // New setting for API key
+        geminiApiKey: '', // User's API key
+        geminiModel: '' // User's selected valid model
     };
 
     let draftMealItems = {}; // foodId -> servings
@@ -957,6 +961,65 @@
 
     // --- GEMINI API INTEGRATION ---
     const envApiKey = ""; // Environment provided key (works only in preview)
+
+    // Fetches dynamically which models the user's specific API key has access to!
+    async function fetchAvailableModels() {
+        const key = document.getElementById('settings-api-key').value.trim();
+        const statusEl = document.getElementById('api-key-status');
+        const modelSelect = document.getElementById('settings-model-name');
+        
+        if (!key) return;
+        
+        statusEl.style.display = 'block';
+        statusEl.innerText = "⏳ Fetching compatible models from Google...";
+        statusEl.style.color = 'var(--color-carbs)';
+        
+        try {
+            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${key}`);
+            if (!res.ok) {
+                const err = await res.json();
+                throw new Error(err.error?.message || 'Failed to authenticate API key');
+            }
+            
+            const data = await res.json();
+            // Filter for text generation models that include "flash" (usually 1.5 or 2.0)
+            const validModels = data.models.filter(m => 
+                m.supportedGenerationMethods && 
+                m.supportedGenerationMethods.includes('generateContent') &&
+                m.name.includes('flash')
+            );
+            
+            if (validModels.length === 0) throw new Error("No flash-compatible models found for this key.");
+            
+            // Build the dropdown options
+            modelSelect.innerHTML = validModels.map(m => {
+                const name = m.name.replace('models/', '');
+                return `<option value="${name}">${name}</option>`;
+            }).join('');
+            
+            // If we previously saved a model and it's valid, re-select it
+            if (appData.geminiModel && Array.from(modelSelect.options).some(o => o.value === appData.geminiModel)) {
+                modelSelect.value = appData.geminiModel;
+            } else {
+                appData.geminiModel = modelSelect.value;
+            }
+            
+            appData.geminiApiKey = key;
+            saveData();
+            
+            statusEl.innerText = "✅ API Key & Models loaded successfully!";
+            statusEl.style.color = 'var(--color-pro)';
+            
+        } catch (e) {
+            statusEl.innerText = "❌ Error: " + e.message;
+            statusEl.style.color = 'var(--color-fat)';
+        }
+    }
+
+    function updateSelectedModel() {
+        appData.geminiModel = document.getElementById('settings-model-name').value;
+        saveData();
+    }
 
     async function fetchGeminiWithRetry(prompt, schema, maxRetries = 5) {
         let activeKey = appData.geminiApiKey;
@@ -968,8 +1031,12 @@
             throw new Error("API_KEY_MISSING");
         }
 
-        // Using the widely available preview model string to ensure it works globally
-        const modelName = "gemini-2.5-flash-preview-09-2025";
+        // Determine which model to use. If it's your personal key, it grabs the one you selected in settings!
+        let modelName = appData.geminiModel || "gemini-1.5-flash"; 
+        if (activeKey === envApiKey) {
+            modelName = "gemini-2.5-flash-preview-09-2025";
+        }
+
         const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${activeKey}`;
         
         // Use a more resilient approach by appending the schema to the prompt and asking for JSON
@@ -1218,6 +1285,10 @@
         // Restore API Key in Settings if saved
         if (appData.geminiApiKey) {
             document.getElementById('settings-api-key').value = appData.geminiApiKey;
+            // Pre-fill the model dropdown if one is saved
+            if (appData.geminiModel) {
+                document.getElementById('settings-model-name').innerHTML = `<option value="${appData.geminiModel}">${appData.geminiModel}</option>`;
+            }
         }
 
         updateLogoUI();
@@ -1245,18 +1316,6 @@
     function saveData() {
         localStorage.setItem('chiral_appData', JSON.stringify(appData));
         updateGlobalUI();
-    }
-    
-    // --- SETTINGS LOGIC ADDITIONS ---
-    function saveApiKeyBtn() {
-        appData.geminiApiKey = document.getElementById('settings-api-key').value.trim();
-        saveData();
-        
-        const statusEl = document.getElementById('api-key-status');
-        statusEl.style.display = 'block';
-        setTimeout(() => {
-            statusEl.style.display = 'none';
-        }, 3000);
     }
 
     // --- CORE UI UPDATES ---
