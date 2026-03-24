@@ -17,16 +17,16 @@
             --text-primary: #ffffff;
             --text-secondary: #aaaaaa;
             
-            /* Macro Accents */
-            --color-cal: #3b82f6;
-            --color-pro: #10b981;
-            --color-carbs: #f59e0b;
-            --color-fat: #ef4444;
-            --color-accent: #3b82f6;
+            /* Macro Accents (Updated!) */
+            --color-cal: #3b82f6;   /* Blue */
+            --color-pro: #ef4444;   /* Red */
+            --color-carbs: #10b981; /* Green */
+            --color-fat: #eab308;   /* Yellow */
+            --color-accent: #8b5cf6; /* Purple for AI / general accents */
 
             --border-radius: 12px;
-            --header-height: 60px;
-            --footer-height: 70px;
+            --header-height: 64px;
+            --footer-height: 80px;
             --progress-height: 24px;
         }
 
@@ -52,7 +52,7 @@
             display: flex;
             flex-direction: column;
             height: 100vh;
-            height: 100dvh; /* For mobile browsers with dynamic UI */
+            height: 100dvh;
         }
 
         /* Header */
@@ -67,352 +67,111 @@
             z-index: 10;
         }
         
-        .header-left {
-            display: flex;
-            align-items: center;
-        }
+        .header-left { display: flex; align-items: center; }
         
         #header-goal-label {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--color-accent);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            background: rgba(59, 130, 246, 0.15);
-            padding: 4px 8px;
-            border-radius: 6px;
+            font-size: 11px; font-weight: 800; color: var(--text-secondary);
+            text-transform: uppercase; letter-spacing: 0.5px;
+            background: var(--bg-surface-light); padding: 4px 8px; border-radius: 6px;
         }
 
         .header-center {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: 800;
-            font-size: 20px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
+        .header-center svg { width: 34px; height: 34px; }
+        .header-center span { font-size: 10px; font-weight: 800; letter-spacing: 1.5px; margin-top: -2px; color: var(--text-secondary); }
 
-        .header-right {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            gap: 12px;
-        }
+        .header-right { display: flex; justify-content: flex-end; align-items: center; gap: 12px; }
 
-        .logo-container {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-        
-        .logo-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .menu-btn {
-            font-size: 24px;
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            cursor: pointer;
-            padding: 4px;
-        }
+        .menu-btn { font-size: 24px; background: none; border: none; color: var(--text-primary); cursor: pointer; padding: 4px; }
 
         /* Sidebar Navigation */
         #sidebar-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.6);
-            z-index: 100;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6);
+            z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
         }
-        #sidebar-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
+        #sidebar-overlay.active { opacity: 1; pointer-events: auto; }
 
         #sidebar {
-            position: fixed;
-            top: 0; left: -280px; bottom: 0;
-            width: 260px;
-            background-color: var(--bg-surface);
-            z-index: 101;
-            transition: transform 0.3s ease;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.5);
-            display: flex;
-            flex-direction: column;
+            position: fixed; top: 0; left: -280px; bottom: 0; width: 260px;
+            background-color: var(--bg-surface); z-index: 101; transition: transform 0.3s ease;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.5); display: flex; flex-direction: column;
         }
-        #sidebar.active {
-            transform: translateX(280px);
-        }
+        #sidebar.active { transform: translateX(280px); }
 
         .sidebar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 16px;
-            border-bottom: 1px solid var(--bg-surface-light);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 16px; border-bottom: 1px solid var(--bg-surface-light);
         }
-        .sidebar-header h2 { font-size: 18px; }
         .close-btn { font-size: 24px; background: none; border: none; color: var(--text-primary); cursor: pointer; }
 
-        .nav-list {
-            list-style: none;
-            padding: 10px 0;
-            flex: 1;
-            overflow-y: auto;
-        }
+        .nav-list { list-style: none; padding: 10px 0; flex: 1; overflow-y: auto; }
         .nav-item {
-            padding: 16px 20px;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-            transition: background 0.2s;
-            border-left: 4px solid transparent;
+            padding: 16px 20px; font-size: 16px; display: flex; align-items: center; gap: 12px;
+            cursor: pointer; transition: background 0.2s; border-left: 4px solid transparent;
         }
-        .nav-item.active {
-            background-color: rgba(59, 130, 246, 0.1);
-            border-left-color: var(--color-accent);
-            color: var(--color-accent);
-            font-weight: 600;
-        }
+        .nav-item.active { background-color: rgba(139, 92, 246, 0.1); border-left-color: var(--color-accent); color: var(--color-accent); font-weight: 600; }
 
         /* Main Content */
         main {
-            flex: 1;
-            overflow-y: auto;
-            overflow-x: hidden;
-            position: relative;
-            display: flex;
-            flex-direction: column;
+            flex: 1; overflow-y: auto; overflow-x: hidden; position: relative; display: flex; flex-direction: column;
         }
-        
         main::-webkit-scrollbar { display: none; }
         main { -ms-overflow-style: none; scrollbar-width: none; }
 
         .page {
-            display: none;
-            padding: 16px;
-            animation: fadeIn 0.2s ease;
-            padding-bottom: 80px; /* Space for FAB/scroll clearance */
-            flex: 1;
+            display: none; padding: 16px; animation: fadeIn 0.2s ease; padding-bottom: 90px; flex: 1;
         }
         .page.active { display: flex; flex-direction: column; }
-        
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .section-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: var(--text-primary);
-        }
+        .section-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--text-primary); }
 
         /* UI Components */
-        .card {
-            background-color: var(--bg-surface);
-            border-radius: var(--border-radius);
-            padding: 16px;
-            margin-bottom: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
-
+        .card { background-color: var(--bg-surface); border-radius: var(--border-radius); padding: 16px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        
         .btn {
-            background-color: var(--bg-surface-light);
-            color: var(--text-primary);
-            border: none;
-            padding: 12px 16px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: background 0.2s;
+            background-color: var(--bg-surface-light); color: var(--text-primary); border: none; padding: 12px 16px;
+            border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
         }
-        .btn-primary { background-color: var(--color-accent); }
-        .btn-danger { background-color: rgba(239, 68, 68, 0.2); color: var(--color-fat); }
-        .btn-small { padding: 6px 12px; font-size: 12px; }
+        .btn-primary { background-color: var(--color-cal); }
+        .btn-danger { background-color: rgba(239, 68, 68, 0.2); color: var(--color-pro); }
         
         input, select, textarea {
-            width: 100%;
-            background-color: var(--bg-surface-light);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: var(--text-primary);
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 16px; /* Prevents iOS zoom */
-            margin-bottom: 12px;
+            width: 100%; background-color: var(--bg-surface-light); border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-primary); padding: 12px; border-radius: 8px; font-size: 16px; margin-bottom: 12px;
         }
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--color-accent);
-        }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--color-cal); }
 
-        /* Build Meal - Filters & Grid */
-        .filter-scroll {
-            display: flex;
-            overflow-x: auto;
-            gap: 8px;
-            padding-bottom: 12px;
-            margin-bottom: 12px;
-            scrollbar-width: none;
-        }
+        /* Build Meal */
+        .filter-scroll { display: flex; overflow-x: auto; gap: 8px; padding-bottom: 12px; margin-bottom: 12px; scrollbar-width: none; }
         .filter-scroll::-webkit-scrollbar { display: none; }
-        .filter-btn {
-            background-color: var(--bg-surface);
-            border: 1px solid var(--bg-surface-light);
-            color: var(--text-secondary);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 14px;
-            white-space: nowrap;
-        }
-        .filter-btn.active {
-            background-color: var(--color-accent);
-            color: #fff;
-            border-color: var(--color-accent);
-        }
+        .filter-btn { background-color: var(--bg-surface); border: 1px solid var(--bg-surface-light); color: var(--text-secondary); padding: 6px 14px; border-radius: 20px; font-size: 14px; white-space: nowrap; }
+        .filter-btn.active { background-color: var(--color-cal); color: #fff; border-color: var(--color-cal); }
 
         .quick-add-btn {
-            width: 100%;
-            padding: 14px;
-            background: transparent;
-            border: 2px dashed var(--color-accent);
-            color: var(--color-accent);
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 15px;
-            margin-bottom: 16px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .quick-add-btn:active {
-            background: rgba(59, 130, 246, 0.1);
+            width: 100%; padding: 14px; background: transparent; border: 2px dashed var(--color-cal); color: var(--color-cal);
+            border-radius: 12px; font-weight: 700; font-size: 15px; margin-bottom: 16px; cursor: pointer;
         }
 
-        .food-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
-            gap: 12px;
-        }
-        
-        .food-card {
-            background-color: var(--bg-surface);
-            border-radius: 12px;
-            padding: 12px 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            position: relative;
-        }
-        
-        .food-img-wrapper {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
-            background-color: var(--bg-surface-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 8px;
-            overflow: hidden;
-            font-size: 32px; /* For emojis */
-        }
-        .food-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-        
-        .food-name {
-            font-size: 12px;
-            font-weight: 600;
-            line-height: 1.2;
-            height: 28px;
-            overflow: hidden;
-            margin-bottom: 8px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-        }
+        .food-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(105px, 1fr)); gap: 12px; }
+        .food-card { background-color: var(--bg-surface); border-radius: 12px; padding: 12px 8px; display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; }
+        .food-img-wrapper { width: 60px; height: 60px; border-radius: 12px; background-color: var(--bg-surface-light); display: flex; align-items: center; justify-content: center; margin-bottom: 8px; overflow: hidden; font-size: 32px; }
+        .food-name { font-size: 12px; font-weight: 600; line-height: 1.2; height: 28px; overflow: hidden; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        .food-macros-tiny { font-size: 9px; color: var(--text-secondary); margin-bottom: 8px; }
+        .food-actions { display: flex; gap: 4px; width: 100%; justify-content: space-between; }
+        .food-actions button { background-color: var(--bg-surface-light); color: var(--text-primary); border: none; width: 30px; height: 30px; border-radius: 50%; font-size: 12px; font-weight: bold; }
+        .food-actions button:active { background-color: var(--color-cal); }
+        .selected-badge { position: absolute; top: -5px; right: -5px; background-color: var(--color-cal); color: white; font-size: 12px; font-weight: bold; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 
-        .food-macros-tiny {
-            font-size: 9px;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-        }
-        
-        .food-actions {
-            display: flex;
-            gap: 4px;
-            width: 100%;
-            justify-content: space-between;
-        }
-        .food-actions button {
-            background-color: var(--bg-surface-light);
-            color: var(--text-primary);
-            border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        .food-actions button:active { background-color: var(--color-accent); }
-
-        .selected-badge {
-            position: absolute;
-            top: -5px; right: -5px;
-            background-color: var(--color-accent);
-            color: white;
-            font-size: 12px; font-weight: bold;
-            width: 22px; height: 22px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-        }
-
-        /* In-Progress Meal UI */
-        #selected-items-area { margin-top: 24px; }
-        .selected-list-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px solid var(--bg-surface-light);
-        }
-        .selected-list-item:last-child { border-bottom: none; }
-        .selected-list-item .info { flex: 1; }
-        .selected-list-item .name { font-size: 14px; font-weight: 600; }
-        .selected-list-item .sub { font-size: 12px; color: var(--text-secondary); }
+        .selected-list-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--bg-surface-light); }
+        .selected-list-item .info .name { font-size: 14px; font-weight: 600; }
+        .selected-list-item .info .sub { font-size: 12px; color: var(--text-secondary); }
         .selected-list-item .controls { display: flex; align-items: center; gap: 8px; }
-        .selected-list-item .controls button { 
-            background: var(--bg-surface-light); border: none; color: white; width: 28px; height: 28px; border-radius: 6px; 
-        }
+        .selected-list-item .controls button { background: var(--bg-surface-light); border: none; color: white; width: 28px; height: 28px; border-radius: 6px; }
 
-        /* Today / Edit / History Cards */
-        .meal-card-header {
-            display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;
-        }
-        .meal-card-title { font-size: 16px; font-weight: 700; }
-        .meal-card-time { font-size: 12px; color: var(--text-secondary); }
-        .meal-card-desc { font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.4; }
-        
-        .macro-grid-small {
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; text-align: center;
-            background: var(--bg-base); padding: 8px; border-radius: 8px;
-        }
+        /* Macro displays & Colors */
+        .macro-grid-small { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; text-align: center; background: var(--bg-base); padding: 8px; border-radius: 8px; }
         .macro-grid-small .val { font-size: 14px; font-weight: bold; }
         .macro-grid-small .lbl { font-size: 10px; text-transform: uppercase; margin-top: 2px; }
         
@@ -422,124 +181,68 @@
         .c-fat { color: var(--color-fat); }
 
         /* Progress Bars */
-        #progress-section {
-            height: var(--progress-height);
-            background-color: var(--bg-surface);
-            display: flex;
-            border-top: 1px solid var(--bg-surface-light);
-        }
+        #progress-section { height: var(--progress-height); background-color: var(--bg-surface); display: flex; border-top: 1px solid var(--bg-surface-light); }
         .prog-col { flex: 1; position: relative; display: flex; align-items: center; padding: 0 4px; border-right: 1px solid var(--bg-surface-light); }
-        .prog-col:last-child { border-right: none; }
-        
-        .prog-bg {
-            width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; position: relative;
-        }
-        .prog-fill {
-            height: 100%; width: 0%; transition: width 0.3s ease;
-        }
+        .prog-bg { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; position: relative; }
+        .prog-fill { height: 100%; width: 0%; transition: width 0.3s ease; }
         .f-cal { background-color: var(--color-cal); }
         .f-pro { background-color: var(--color-pro); }
         .f-carbs { background-color: var(--color-carbs); }
         .f-fat { background-color: var(--color-fat); }
-        
-        .prog-label {
-            position: absolute; width: 100%; text-align: center; font-size: 8px; font-weight: bold; top: 2px; left:0; z-index: 1;
-            text-shadow: 0px 1px 2px rgba(0,0,0,0.8);
-        }
+        .prog-label { position: absolute; width: 100%; text-align: center; font-size: 8px; font-weight: bold; top: 2px; left:0; z-index: 1; text-shadow: 0px 1px 2px rgba(0,0,0,0.8); }
 
         /* Footer */
-        footer {
-            height: var(--footer-height);
-            background-color: var(--bg-surface);
-            display: flex;
-            border-top: 1px solid var(--bg-surface-light);
-            padding-bottom: env(safe-area-inset-bottom);
-        }
-        .footer-col {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-right: 1px solid var(--bg-surface-light);
-        }
-        .footer-col:last-child { border-right: none; }
-        .footer-val { font-size: 18px; font-weight: 800; }
+        footer { height: var(--footer-height); background-color: var(--bg-surface); display: flex; border-top: 1px solid var(--bg-surface-light); padding-bottom: env(safe-area-inset-bottom); }
+        .footer-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; border-right: 1px solid var(--bg-surface-light); }
+        .footer-val { font-size: 16px; font-weight: 800; }
         .footer-lbl { font-size: 10px; font-weight: 600; text-transform: uppercase; margin-top: 2px; color: var(--text-secondary); }
-        .footer-goal { font-size: 11px; color: var(--text-secondary); font-weight: 600; margin-left: 2px; }
+        .footer-goal { font-size: 10px; color: var(--text-secondary); font-weight: 600; margin-left: 2px; }
+        .footer-diff { font-size: 9px; font-weight: 700; margin-top: 2px; } /* Shows Left/Over */
 
         /* Modals */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.8); z-index: 200; display: none;
-            align-items: center; justify-content: center; padding: 16px;
-        }
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 200; display: none; align-items: center; justify-content: center; padding: 16px; }
         .modal-overlay.active { display: flex; }
-        .modal-content {
-            background: var(--bg-surface); width: 100%; max-width: 400px; max-height: 90vh;
-            border-radius: var(--border-radius); padding: 20px; overflow-y: auto;
-            position: relative; animation: slideUp 0.3s ease;
-        }
+        .modal-content { background: var(--bg-surface); width: 100%; max-width: 400px; max-height: 90vh; border-radius: var(--border-radius); padding: 20px; overflow-y: auto; position: relative; animation: slideUp 0.3s ease; }
         @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        
         .modal-close { position: absolute; top: 16px; right: 16px; font-size: 24px; background: none; border:none; color: var(--text-secondary); }
-        .modal-title { font-size: 20px; font-weight: 700; margin-bottom: 20px; }
 
-        /* Forms / Toggles */
-        .photo-toggle {
-            display: flex; gap: 8px; margin-bottom: 12px; background: var(--bg-base); padding: 4px; border-radius: 8px;
-        }
-        .photo-toggle div {
-            flex: 1; text-align: center; padding: 8px; border-radius: 6px; font-size: 14px; cursor: pointer; color: var(--text-secondary);
-        }
+        /* Forms / UI tools */
+        .photo-toggle { display: flex; gap: 8px; margin-bottom: 12px; background: var(--bg-base); padding: 4px; border-radius: 8px; }
+        .photo-toggle div { flex: 1; text-align: center; padding: 8px; border-radius: 6px; font-size: 14px; cursor: pointer; color: var(--text-secondary); }
         .photo-toggle div.active { background: var(--bg-surface-light); color: white; font-weight: 600; }
-
-        .img-preview-box {
-            width: 100%; height: 120px; border: 2px dashed var(--bg-surface-light); border-radius: 8px;
-            display: flex; align-items: center; justify-content: center; margin-bottom: 12px; overflow: hidden; font-size: 48px;
-        }
+        .img-preview-box { width: 100%; height: 120px; border: 2px dashed var(--bg-surface-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; overflow: hidden; font-size: 48px; }
         .img-preview-box img { width: 100%; height: 100%; object-fit: contain; }
-
-        /* Goals Planner Tabs */
         .tabs { display: flex; border-bottom: 1px solid var(--bg-surface-light); margin-bottom: 16px; }
         .tab { flex: 1; text-align: center; padding: 12px 0; font-size: 12px; font-weight: 600; color: var(--text-secondary); border-bottom: 2px solid transparent; cursor: pointer; }
-        .tab.active { color: var(--color-accent); border-bottom-color: var(--color-accent); }
-        
+        .tab.active { color: var(--color-cal); border-bottom-color: var(--color-cal); }
         .week-grid { display: grid; grid-template-columns: 100px 1fr; gap: 12px; align-items: center; margin-bottom: 8px; }
-        .week-day { font-size: 14px; font-weight: 600; }
-
-        /* Empty States */
         .empty-state { text-align: center; padding: 40px 20px; color: var(--text-secondary); }
-        .empty-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.5; }
-
-        .flex-row { display: flex; gap: 8px; }
-        .flex-1 { flex: 1; }
-        
-        /* Flex Input Row for Modals */
+        .flex-row { display: flex; gap: 8px; } .flex-1 { flex: 1; }
         .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-        /* AI Features */
-        .ai-card {
-            background: linear-gradient(145deg, rgba(30,30,40,1) 0%, rgba(20,20,30,1) 100%);
-            border: 1px solid rgba(138, 43, 226, 0.4);
-            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.15);
-            position: relative;
-            overflow: hidden;
-            margin-top: auto; /* Pushes to bottom */
+        /* AI Chat Page Specifics */
+        .chat-container { flex: 1; display: flex; flex-direction: column; overflow-y: auto; gap: 12px; padding-bottom: 16px; scrollbar-width: none; }
+        .chat-bubble { max-width: 85%; padding: 12px 16px; border-radius: 16px; font-size: 14px; line-height: 1.4; word-wrap: break-word; }
+        .chat-user { background-color: var(--bg-surface-light); align-self: flex-end; border-bottom-right-radius: 4px; }
+        .chat-ai { background: linear-gradient(145deg, rgba(30,30,40,1) 0%, rgba(20,20,30,1) 100%); border: 1px solid rgba(138, 43, 226, 0.3); align-self: flex-start; border-bottom-left-radius: 4px; color: #e9d5ff; }
+        .chat-img-preview { max-width: 200px; border-radius: 8px; margin-bottom: 8px; }
+        
+        .chat-input-area { background: var(--bg-surface); padding: 12px; border-radius: 16px; border: 1px solid var(--bg-surface-light); display: flex; align-items: flex-end; gap: 8px; margin-top: auto; }
+        .chat-input-area textarea { background: transparent; border: none; margin: 0; padding: 4px; resize: none; max-height: 100px; flex: 1; }
+        .chat-input-area textarea:focus { outline: none; }
+        .chat-icon-btn { background: rgba(255,255,255,0.05); color: white; border: none; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
+        .chat-send-btn { background: var(--color-accent); color: white; border: none; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; font-weight: bold; }
+
+        /* Floating Action Button (FAB) */
+        .fab {
+            position: fixed; bottom: 100px; right: 20px; width: 56px; height: 56px;
+            background: rgba(139, 92, 246, 0.15); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(139, 92, 246, 0.4); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; z-index: 50; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3); transition: transform 0.2s;
         }
-        .ai-title {
-            font-size: 14px; font-weight: 700; color: #d8b4fe; margin-bottom: 12px;
-            display: flex; align-items: center; gap: 6px;
-        }
-        .ai-loading {
-            display: none; font-size: 12px; color: #d8b4fe; text-align: center; margin-top: 12px; font-style: italic;
-        }
-        .ai-btn {
-            background-color: rgba(138, 43, 226, 0.2);
-            color: #d8b4fe;
-            border: 1px solid rgba(138, 43, 226, 0.4);
-        }
-        .ai-btn:hover { background-color: rgba(138, 43, 226, 0.4); }
+        .fab:active { transform: scale(0.9); }
+        .fab svg { width: 32px; height: 32px; }
 
     </style>
 </head>
@@ -551,19 +254,18 @@
         <div class="header-left">
             <span id="header-goal-label">GYM</span>
         </div>
+        
+        <!-- Redesigned Header Center -->
         <div class="header-center">
-            CHIRAL
+            <svg viewBox="0 0 100 100" style="background:transparent;">
+                <path d="M 35 30 C 15 10, 10 50, 30 70 C 50 90, 50 10, 70 30 C 90 50, 85 90, 65 70" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
+                <circle cx="35" cy="30" r="9" fill="#aaa"/>
+                <circle cx="65" cy="70" r="9" fill="#aaa"/>
+            </svg>
+            <span>CHIRAL</span>
         </div>
+        
         <div class="header-right">
-            <div class="logo-container" onclick="navTo('settings')">
-                <img id="header-logo" src="" alt="Logo" style="display:none;">
-                <!-- Recreated Chiral Custom Logo -->
-                <svg id="header-logo-svg" width="32" height="32" viewBox="0 0 100 100" style="background:transparent;">
-                    <path d="M 35 30 C 15 10, 10 50, 30 70 C 50 90, 50 10, 70 30 C 90 50, 85 90, 65 70" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
-                    <circle cx="35" cy="30" r="9" fill="#aaa"/>
-                    <circle cx="65" cy="70" r="9" fill="#aaa"/>
-                </svg>
-            </div>
             <button class="menu-btn" onclick="toggleSidebar()">☰</button>
         </div>
     </header>
@@ -577,12 +279,11 @@
         </div>
         <ul class="nav-list">
             <li class="nav-item active" onclick="navTo('build-meal')" data-page="build-meal">➕ Build Meal</li>
-            <li class="nav-item" onclick="navTo('today')" data-page="today">📊 Today</li>
-            <li class="nav-item" onclick="navTo('edit-meals')" data-page="edit-meals">✏️ Edit Meals</li>
+            <li class="nav-item" onclick="navTo('daily-log')" data-page="daily-log">📊 Daily Log</li>
             <li class="nav-item" onclick="navTo('library')" data-page="library">🍕 Food Library</li>
-            <li class="nav-item" onclick="navTo('goals')" data-page="goals">🎯 Goals & Planner</li>
             <li class="nav-item" onclick="navTo('history')" data-page="history">📈 History</li>
             <li class="nav-item" onclick="navTo('settings')" data-page="settings">⚙️ Settings</li>
+            <li class="nav-item" onclick="navTo('ai')" data-page="ai" style="color:var(--color-accent);">✨ Chiral AI</li>
         </ul>
     </nav>
 
@@ -593,28 +294,21 @@
         <div id="page-build-meal" class="page active">
             <div class="section-title">Build Your Meal</div>
             
-            <div class="filter-scroll" id="build-category-filters">
-                <!-- Filters generated by JS -->
-            </div>
+            <div class="filter-scroll" id="build-category-filters"></div>
             
             <div style="margin-bottom: 12px;">
                 <input type="text" id="build-search" placeholder="Search foods..." oninput="renderFoodGrid()">
             </div>
 
-            <!-- Highly visible Quick Add Button -->
             <button class="quick-add-btn" onclick="document.getElementById('quick-add-modal').classList.add('active')">
                 ⚡ Quick Add One-Time Food
             </button>
             
-            <div class="food-grid" id="build-food-grid">
-                <!-- Grid items generated by JS -->
-            </div>
+            <div class="food-grid" id="build-food-grid"></div>
 
             <div id="selected-items-area" style="display: none;">
                 <div class="section-title" style="margin-top: 24px;">Selected Items</div>
-                <div class="card" id="selected-items-list">
-                    <!-- Selected items list -->
-                </div>
+                <div class="card" id="selected-items-list"></div>
                 
                 <div class="card">
                     <input type="text" id="draft-meal-name" placeholder="Meal Name (e.g., Breakfast)">
@@ -633,67 +327,38 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Spacer to push AI to bottom if there aren't many foods -->
-            <div style="flex: 1; min-height: 32px;"></div>
-
-            <!-- AI Assistant Card (Anchored to bottom) -->
-            <div class="card ai-card">
-                <div class="ai-title">✨ AI Assistant</div>
-                
-                <div style="position: relative; margin-bottom: 12px;">
-                    <textarea id="ai-input" rows="2" placeholder="Ask a question, describe a meal, or upload a photo..." style="margin-bottom: 0; padding-right: 40px;"></textarea>
-                    <button onclick="document.getElementById('ai-img-upload').click()" style="position: absolute; right: 8px; bottom: 8px; background: rgba(255,255,255,0.1); border: none; border-radius: 6px; padding: 4px 8px; font-size: 16px; cursor: pointer;">📷</button>
-                </div>
-                
-                <input type="file" id="ai-img-upload" accept="image/*" style="display:none;" onchange="handleAiImageUpload(event)">
-                
-                <div id="ai-img-preview-container" style="display:none; position: relative; width: 60px; height: 60px; margin-bottom: 12px;">
-                    <img id="ai-img-preview" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px; border: 1px solid var(--color-accent);">
-                    <button style="position: absolute; top: -5px; right: -5px; background: var(--color-fat); color: white; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center;" onclick="clearAiImage()">✖</button>
-                    <input type="hidden" id="ai-img-data">
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
-                    <button class="btn ai-btn" onclick="aiAutoLog()">✨ Auto-Log Meal</button>
-                    <button class="btn ai-btn" onclick="aiAddFood()">✨ Add to Library</button>
-                </div>
-                <button class="btn ai-btn" style="width: 100%;" onclick="aiAsk()">💬 Ask AI (Nutrition Q&A)</button>
-                
-                <div id="ai-loading" class="ai-loading">Thinking...</div>
-                <div id="ai-message" style="display:none; margin-top:12px; font-size:13px; color:#fff; background:rgba(255,255,255,0.05); padding:8px; border-radius:6px; line-height:1.4; white-space: pre-wrap;"></div>
-            </div>
-
         </div>
 
-        <!-- PAGE: TODAY -->
-        <div id="page-today" class="page">
-            <div class="section-title">Today's Progress</div>
-            <div id="today-meals-list">
-                <!-- Populated by JS -->
-            </div>
-        </div>
-
-        <!-- PAGE: EDIT MEALS -->
-        <div id="page-edit-meals" class="page">
-            <div class="section-title">Edit Today's Meals</div>
-            <div id="edit-meals-list">
-                <!-- Populated by JS -->
-            </div>
+        <!-- PAGE: DAILY LOG (Combines Today & Edit Meals) -->
+        <div id="page-daily-log" class="page">
+            <div class="section-title" id="daily-log-title">Today's Log</div>
+            <p style="font-size:12px; color:var(--text-secondary); margin-bottom:16px;">Tap any meal to edit or delete it.</p>
+            <div id="daily-meals-list"></div>
         </div>
 
         <!-- PAGE: FOOD LIBRARY -->
         <div id="page-library" class="page">
             <button class="btn btn-primary" style="width:100%; margin-bottom:16px;" onclick="openFoodModal()">+ Add New Food</button>
             <input type="text" id="lib-search" placeholder="Search foods..." oninput="renderFoodLibrary()">
-            <div id="lib-food-list">
-                <!-- Populated by JS -->
-            </div>
+            <div id="lib-food-list"></div>
         </div>
 
-        <!-- PAGE: GOALS & PLANNER -->
-        <div id="page-goals" class="page">
-            <div class="section-title">Goal Profiles</div>
+        <!-- PAGE: HISTORY -->
+        <div id="page-history" class="page">
+            <div class="flex-row" style="margin-bottom:16px;">
+                <button class="btn btn-primary flex-1" onclick="advanceDay()">→ Next Day Entry</button>
+                <button class="btn flex-1" onclick="jumpToActualToday()">📅 Jump to Today</button>
+            </div>
+            
+            <div class="section-title">History</div>
+            <div id="history-list"></div>
+        </div>
+
+        <!-- PAGE: SETTINGS (Now includes Goals & Planner) -->
+        <div id="page-settings" class="page">
+            
+            <!-- GOALS & PLANNER MOVED HERE -->
+            <div class="section-title">Goals & Planner</div>
             <div class="tabs" id="goal-tabs">
                 <div class="tab active" onclick="switchGoalTab('GYM_POOL')">GYM+POOL</div>
                 <div class="tab" onclick="switchGoalTab('GYM')">GYM</div>
@@ -705,53 +370,21 @@
                 <label style="font-size:12px; color:var(--text-secondary);">Calories</label>
                 <input type="number" id="goal-cal" oninput="saveCurrentGoal()">
                 <div class="input-row">
-                    <div>
-                        <label style="font-size:12px; color:var(--text-secondary);">Protein (g)</label>
-                        <input type="number" id="goal-pro" oninput="saveCurrentGoal()">
-                    </div>
-                    <div>
-                        <label style="font-size:12px; color:var(--text-secondary);">Carbs (g)</label>
-                        <input type="number" id="goal-carbs" oninput="saveCurrentGoal()">
-                    </div>
-                    <div>
-                        <label style="font-size:12px; color:var(--text-secondary);">Fat (g)</label>
-                        <input type="number" id="goal-fat" oninput="saveCurrentGoal()">
-                    </div>
+                    <div><label style="font-size:12px; color:var(--text-secondary);">Protein (g)</label><input type="number" id="goal-pro" oninput="saveCurrentGoal()"></div>
+                    <div><label style="font-size:12px; color:var(--text-secondary);">Carbs (g)</label><input type="number" id="goal-carbs" oninput="saveCurrentGoal()"></div>
+                    <div><label style="font-size:12px; color:var(--text-secondary);">Fat (g)</label><input type="number" id="goal-fat" oninput="saveCurrentGoal()"></div>
                 </div>
             </div>
 
-            <div class="section-title" style="margin-top:24px;">Week Planner</div>
-            <div class="card" id="week-planner-list">
-                <!-- Populated by JS -->
-            </div>
-        </div>
+            <div class="card" id="week-planner-list" style="margin-top: 12px;"></div>
 
-        <!-- PAGE: HISTORY -->
-        <div id="page-history" class="page">
-            <div class="flex-row" style="margin-bottom:16px;">
-                <button class="btn btn-primary flex-1" onclick="advanceDay()">→ Next Day Entry</button>
-                <button class="btn flex-1" onclick="jumpToActualToday()">📅 Jump to Today</button>
-            </div>
-            <button class="btn btn-danger" style="width:100%; margin-bottom: 24px;" onclick="resetAllData()">🗑️ Reset All Data</button>
-            
-            <div class="section-title">History</div>
-            <div id="history-list">
-                <!-- Populated by JS -->
-            </div>
-        </div>
-
-        <!-- PAGE: SETTINGS -->
-        <div id="page-settings" class="page">
-            
-            <!-- NEW AI SETTINGS SECTION -->
-            <div class="section-title">AI Configuration</div>
+            <!-- AI CONFIG -->
+            <div class="section-title" style="margin-top:24px;">AI Configuration</div>
             <div class="card">
-                <p style="font-size:14px; color:var(--text-secondary); margin-bottom:12px;">
-                    Paste your free Gemini API Key, then hit <strong>Verify & Load Models</strong> to automatically fetch models supported by your key!
-                </p>
+                <p style="font-size:14px; color:var(--text-secondary); margin-bottom:12px;">Paste your free Gemini API Key to enable Chiral AI.</p>
                 <div style="display: flex; flex-direction: column; gap: 8px;">
                     <input type="password" id="settings-api-key" placeholder="Paste Gemini API Key here" style="margin-bottom: 0;">
-                    <button class="btn btn-primary" onclick="fetchAvailableModels()">Verify & Load Models</button>
+                    <button class="btn" style="background-color: var(--color-accent); color: white;" onclick="fetchAvailableModels()">Verify & Load Models</button>
                     <select id="settings-model-name" onchange="updateSelectedModel()" style="margin-bottom: 0;">
                         <option value="gemini-1.5-flash">gemini-1.5-flash</option>
                     </select>
@@ -760,33 +393,60 @@
                 <button class="btn" style="width:100%; margin-top:12px;" onclick="window.open('https://aistudio.google.com/app/apikey', '_blank')">🔑 Get Free API Key</button>
             </div>
 
-            <div class="section-title" style="margin-top:24px;">App Info & Storage</div>
+            <!-- SYSTEM SETTINGS -->
+            <div class="section-title" style="margin-top:24px;">System</div>
             <div class="card">
-                <p style="font-size:14px; color:var(--text-secondary); margin-bottom:12px;">
-                    Data is stored locally on your device via browser storage. No cloud sync.
-                </p>
-                <button class="btn" style="width:100%;" onclick="exportData()">📥 Export Data as JSON</button>
+                <button class="btn" style="width:100%; margin-bottom: 12px;" onclick="exportData()">📥 Export Data JSON</button>
+                <button class="btn btn-danger" style="width:100%;" onclick="resetAllData()">🗑️ Factory Reset App</button>
+            </div>
+        </div>
+
+        <!-- PAGE: CHIRAL AI -->
+        <div id="page-ai" class="page" style="padding-bottom: 20px;">
+            
+            <!-- AI Header / Welcome -->
+            <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; margin-top: 10px;">
+                <svg viewBox="0 0 100 100" style="width: 80px; height: 80px; filter: drop-shadow(0 0 8px rgba(139,92,246,0.6));">
+                    <path d="M 35 30 C 15 10, 10 50, 30 70 C 50 90, 50 10, 70 30 C 90 50, 85 90, 65 70" fill="none" stroke="#d8b4fe" stroke-width="5" stroke-linecap="round"/>
+                    <circle cx="35" cy="30" r="7" fill="#8b5cf6"/>
+                    <circle cx="65" cy="70" r="7" fill="#8b5cf6"/>
+                </svg>
+                <h2 style="margin-top: 8px; font-size: 24px; color: #d8b4fe; letter-spacing: 1px;">Chiral AI</h2>
+                <button class="btn" style="background: rgba(139,92,246,0.2); color: #d8b4fe; padding: 4px 12px; font-size: 12px; margin-top: 8px; border-radius: 20px;" onclick="clearAiChat()">+ New Chat</button>
             </div>
 
-            <div class="section-title" style="margin-top:24px;">Custom Logo</div>
-            <div class="card">
-                <div class="img-preview-box" id="settings-logo-preview">
-                    <!-- SVG Default or IMG -->
-                </div>
-                <input type="file" accept="image/*" id="logo-upload" style="display:none;" onchange="handleLogoUpload(event)">
-                <button class="btn" style="width:100%; margin-bottom:12px;" onclick="document.getElementById('logo-upload').click()">🎨 Choose Logo Image</button>
-                <button class="btn btn-danger" style="width:100%;" onclick="resetLogo()">↺ Reset to Default</button>
+            <div class="chat-container" id="chat-box">
+                <div class="chat-bubble chat-ai">Hello! I'm Chiral. I can see your daily macros and food library. What can I help you with today?</div>
             </div>
             
-            <div class="section-title" style="margin-top:24px;">PWA Install</div>
-            <div class="card">
-                <p style="font-size:14px; color:var(--text-secondary);">
-                    To install: Open browser menu (⋮) -> "Add to Home Screen" or "Install App".
-                </p>
+            <input type="file" id="chat-img-upload" accept="image/*" style="display:none;" onchange="attachChatImage(event)">
+            
+            <!-- Chat Input Area -->
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div id="chat-attached-img" style="display:none; position:relative; width:60px; height:60px;">
+                    <img id="chat-preview-img" style="width:100%; height:100%; object-fit:cover; border-radius:8px; border:1px solid var(--color-accent);">
+                    <button style="position:absolute; top:-5px; right:-5px; background:var(--color-pro); color:white; border:none; border-radius:50%; width:20px; height:20px; font-size:10px; cursor:pointer;" onclick="removeChatImage()">✖</button>
+                    <input type="hidden" id="chat-b64-data">
+                </div>
+
+                <div class="chat-input-area">
+                    <button class="chat-icon-btn" onclick="document.getElementById('chat-img-upload').click()">📷</button>
+                    <textarea id="chat-input" rows="1" placeholder="Message Chiral..." oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
+                    <button class="chat-send-btn" onclick="sendChatMessage()">➤</button>
+                </div>
             </div>
         </div>
 
     </main>
+
+    <!-- Floating AI Button (Visible everywhere except AI page) -->
+    <div class="fab" id="fab-ai" onclick="navTo('ai')">
+        <svg viewBox="0 0 100 100" style="background:transparent;">
+            <path d="M 35 30 C 15 10, 10 50, 30 70 C 50 90, 50 10, 70 30 C 90 50, 85 90, 65 70" fill="none" stroke="#d8b4fe" stroke-width="7" stroke-linecap="round"/>
+            <circle cx="35" cy="30" r="9" fill="#8b5cf6"/>
+            <circle cx="65" cy="70" r="9" fill="#8b5cf6"/>
+        </svg>
+    </div>
 
     <!-- Progress Section -->
     <div id="progress-section">
@@ -801,18 +461,22 @@
         <div class="footer-col">
             <div class="footer-val c-cal"><span id="foot-cal">0</span><span class="footer-goal" id="foot-goal-cal">/ 0</span></div>
             <div class="footer-lbl">Cal</div>
+            <div class="footer-diff" id="foot-diff-cal"></div>
         </div>
         <div class="footer-col">
             <div class="footer-val c-pro"><span id="foot-pro">0</span><span class="footer-goal" id="foot-goal-pro">/ 0</span></div>
             <div class="footer-lbl">Pro</div>
+            <div class="footer-diff" id="foot-diff-pro"></div>
         </div>
         <div class="footer-col">
             <div class="footer-val c-carbs"><span id="foot-carbs">0</span><span class="footer-goal" id="foot-goal-carbs">/ 0</span></div>
             <div class="footer-lbl">Carbs</div>
+            <div class="footer-diff" id="foot-diff-carbs"></div>
         </div>
         <div class="footer-col">
             <div class="footer-val c-fat"><span id="foot-fat">0</span><span class="footer-goal" id="foot-goal-fat">/ 0</span></div>
             <div class="footer-lbl">Fat</div>
+            <div class="footer-diff" id="foot-diff-fat"></div>
         </div>
     </footer>
 </div>
@@ -824,29 +488,21 @@
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('food-modal')">✖</button>
         <div class="modal-title" id="food-modal-title">Add New Food</div>
-        
         <input type="hidden" id="food-id">
-        
         <div class="photo-toggle">
             <div id="tgl-emoji" class="active" onclick="setPhotoType('emoji')">Emoji</div>
             <div id="tgl-photo" onclick="setPhotoType('photo')">Photo</div>
         </div>
-        
-        <!-- Emoji Input -->
         <div id="food-emoji-area">
             <input type="text" id="food-emoji-input" placeholder="Enter one emoji (e.g. 🍎)" style="text-align:center; font-size:24px;">
         </div>
-        
-        <!-- Photo Upload -->
         <div id="food-photo-area" style="display:none;">
             <div class="img-preview-box" id="food-photo-preview">🖼️</div>
             <input type="file" accept="image/*" id="food-photo-upload" style="display:none;" onchange="handleFoodPhotoUpload(event)">
             <button class="btn" style="width:100%; margin-bottom:12px;" onclick="document.getElementById('food-photo-upload').click()">Choose Photo</button>
             <input type="hidden" id="food-photo-data">
         </div>
-
         <input type="text" id="food-name" placeholder="Food Name">
-        
         <div class="input-row">
             <div><label class="lbl">Base Wt (g)</label><input type="number" id="food-weight" value="100"></div>
             <div><label class="lbl">Calories</label><input type="number" id="food-cal"></div>
@@ -861,7 +517,6 @@
                 </select>
             </div>
         </div>
-
         <button class="btn btn-primary" style="width:100%; margin-top:16px;" onclick="saveFood()">✓ Save Food</button>
         <button class="btn btn-danger" style="width:100%; margin-top:8px; display:none;" id="btn-del-food" onclick="deleteFood()">🗑️ Delete Food</button>
     </div>
@@ -874,32 +529,25 @@
         <div class="modal-title">Edit Meal</div>
         <input type="hidden" id="edit-meal-index">
         <input type="text" id="edit-meal-name" placeholder="Meal Name">
-        
-        <div id="edit-meal-items-list" style="margin-bottom: 16px;">
-            <!-- Generated by JS -->
-        </div>
-
+        <div id="edit-meal-items-list" style="margin-bottom: 16px;"></div>
         <button class="btn btn-primary" style="width:100%; margin-top:16px;" onclick="saveEditedMeal()">✓ Save Changes</button>
         <button class="btn btn-danger" style="width:100%; margin-top:8px;" onclick="deleteMeal()">🗑️ Delete Meal</button>
     </div>
 </div>
 
-<!-- Quick Add Modal (One-time food) -->
+<!-- Quick Add Modal -->
 <div class="modal-overlay" id="quick-add-modal">
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('quick-add-modal')">✖</button>
         <div class="modal-title">⚡ Quick Add Item</div>
-        <p style="font-size:12px; color:var(--text-secondary); margin-bottom:12px;">Add a one-time food or meal directly to your current selection without saving it to your permanent library.</p>
-        
+        <p style="font-size:12px; color:var(--text-secondary); margin-bottom:12px;">Add a one-time food directly to your current selection without saving it to your permanent library.</p>
         <input type="text" id="qa-name" placeholder="Item Name (e.g., Restaurant Burger)">
-        
         <div class="input-row">
             <div><label class="lbl">Calories</label><input type="number" id="qa-cal" value="0"></div>
             <div><label class="lbl">Protein (g)</label><input type="number" id="qa-pro" value="0"></div>
             <div><label class="lbl">Carbs (g)</label><input type="number" id="qa-carbs" value="0"></div>
             <div><label class="lbl">Fat (g)</label><input type="number" id="qa-fat" value="0"></div>
         </div>
-
         <button class="btn btn-primary" style="width:100%; margin-top:16px;" onclick="saveQuickAdd()">+ Add to Meal</button>
     </div>
 </div>
@@ -955,524 +603,131 @@
         'REST':     { calories: 2000, protein: 120, carbs: 200, fat: 65 }
     };
 
-    const DEFAULT_WEEK_PLAN = {
-        0: 'REST', 1: 'GYM_POOL', 2: 'GYM', 3: 'POOL', 4: 'GYM_POOL', 5: 'GYM', 6: 'REST'
-    };
+    const DEFAULT_WEEK_PLAN = { 0: 'REST', 1: 'GYM_POOL', 2: 'GYM', 3: 'POOL', 4: 'GYM_POOL', 5: 'GYM', 6: 'REST' };
 
     let appData = {
         foods: [...DEFAULT_FOODS],
         days: {},
         goals: JSON.parse(JSON.stringify(DEFAULT_GOALS)),
         weekPlan: JSON.parse(JSON.stringify(DEFAULT_WEEK_PLAN)),
-        currentDate: '', // YYYY-MM-DD
-        customLogo: null,
-        geminiApiKey: '', // User's API key
-        geminiModel: '' // User's selected valid model
+        currentDate: '', 
+        geminiApiKey: '', 
+        geminiModel: '',
+        chatHistory: [] // Store AI Chat locally
     };
 
-    let draftMealItems = {}; // foodId -> servings
+    let draftMealItems = {}; 
     let buildFilter = 'All';
     let editMealCache = null; 
     let currentGoalTab = 'GYM_POOL';
+    const envApiKey = ""; 
 
-    // --- GEMINI API INTEGRATION ---
-    const envApiKey = ""; // Environment provided key (works only in preview)
-    
-    function handleAiImageUpload(e) {
-        const file = e.target.files[0];
-        if(!file) return;
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            const dataUrl = event.target.result;
-            document.getElementById('ai-img-data').value = dataUrl;
-            document.getElementById('ai-img-preview').src = dataUrl;
-            document.getElementById('ai-img-preview-container').style.display = 'block';
-        };
-        reader.readAsDataURL(file);
-    }
-    
-    function clearAiImage() {
-        document.getElementById('ai-img-data').value = '';
-        document.getElementById('ai-img-preview-container').style.display = 'none';
-        document.getElementById('ai-img-upload').value = '';
-    }
-
-    // Fetches dynamically which models the user's specific API key has access to!
-    async function fetchAvailableModels() {
-        const key = document.getElementById('settings-api-key').value.trim();
-        const statusEl = document.getElementById('api-key-status');
-        const modelSelect = document.getElementById('settings-model-name');
-        
-        if (!key) return;
-        
-        statusEl.style.display = 'block';
-        statusEl.innerText = "⏳ Fetching compatible models from Google...";
-        statusEl.style.color = 'var(--color-carbs)';
-        
-        try {
-            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${key}`);
-            if (!res.ok) {
-                const err = await res.json();
-                throw new Error(err.error?.message || 'Failed to authenticate API key');
-            }
-            
-            const data = await res.json();
-            // Filter for text generation models that include "flash" (usually 1.5 or 2.0)
-            const validModels = data.models.filter(m => 
-                m.supportedGenerationMethods && 
-                m.supportedGenerationMethods.includes('generateContent') &&
-                m.name.includes('flash')
-            );
-            
-            if (validModels.length === 0) throw new Error("No flash-compatible models found for this key.");
-            
-            // Build the dropdown options
-            modelSelect.innerHTML = validModels.map(m => {
-                const name = m.name.replace('models/', '');
-                return `<option value="${name}">${name}</option>`;
-            }).join('');
-            
-            // If we previously saved a model and it's valid, re-select it
-            if (appData.geminiModel && Array.from(modelSelect.options).some(o => o.value === appData.geminiModel)) {
-                modelSelect.value = appData.geminiModel;
-            } else {
-                appData.geminiModel = modelSelect.value;
-            }
-            
-            appData.geminiApiKey = key;
-            saveData();
-            
-            statusEl.innerText = "✅ API Key & Models loaded successfully!";
-            statusEl.style.color = 'var(--color-pro)';
-            
-        } catch (e) {
-            statusEl.innerText = "❌ Error: " + e.message;
-            statusEl.style.color = 'var(--color-fat)';
-        }
-    }
-
-    function updateSelectedModel() {
-        appData.geminiModel = document.getElementById('settings-model-name').value;
-        saveData();
-    }
-
-    async function fetchGeminiWithRetry(prompt, schema, maxRetries = 5) {
-        let activeKey = appData.geminiApiKey;
-        if (!activeKey && typeof envApiKey !== 'undefined' && envApiKey !== "") {
-            activeKey = envApiKey;
-        }
-
-        if (!activeKey) {
-            throw new Error("API_KEY_MISSING");
-        }
-
-        // Determine which model to use. If it's your personal key, it grabs the one you selected in settings!
-        let modelName = appData.geminiModel || "gemini-1.5-flash"; 
-        if (activeKey === envApiKey) {
-            modelName = "gemini-2.5-flash-preview-09-2025";
-        }
-
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${activeKey}`;
-        
-        // Use a more resilient approach by appending the schema to the prompt and asking for JSON
-        const fullPrompt = prompt + "\n\nIMPORTANT: Respond ONLY with valid JSON exactly matching this schema: " + JSON.stringify(schema);
-        
-        const payload = {
-            contents: [{ parts: [{ text: fullPrompt }] }],
-            generationConfig: {
-                responseMimeType: "application/json"
-            }
-        };
-        
-        const delays = [1000, 2000, 4000, 8000, 16000];
-        for (let i = 0; i < maxRetries; i++) {
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                
-                if (!response.ok) {
-                    let errMsg = `HTTP Error ${response.status}`;
-                    try {
-                        const errData = await response.json();
-                        errMsg = errData.error.message;
-                    } catch(e) {}
-                    throw new Error(errMsg);
-                }
-                
-                const data = await response.json();
-                let text = data.candidates[0].content.parts[0].text;
-                // Strip markdown backticks if the model wraps the JSON
-                text = text.replace(/```json/gi, '').replace(/```/g, '').trim();
-                return JSON.parse(text);
-                
-            } catch (e) {
-                if (e.message === "API_KEY_MISSING" || e.message.includes("API key not valid") || i === maxRetries - 1) throw e;
-                await new Promise(res => setTimeout(res, delays[i]));
-            }
-        }
-    }
-
-    async function fetchGeminiChat(prompt, base64Image = null, maxRetries = 5) {
-        let activeKey = appData.geminiApiKey;
-        if (!activeKey && typeof envApiKey !== 'undefined' && envApiKey !== "") activeKey = envApiKey;
-        if (!activeKey) throw new Error("API_KEY_MISSING");
-
-        let modelName = appData.geminiModel || "gemini-1.5-flash"; 
-        if (activeKey === envApiKey) modelName = "gemini-2.5-flash-preview-09-2025";
-
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${activeKey}`;
-        
-        let parts = [{ text: prompt + "\n\nYou are a concise, helpful nutrition expert. Keep your answer short and practical." }];
-        
-        if (base64Image) {
-            const commaIdx = base64Image.indexOf(',');
-            const mimeMatch = base64Image.match(/^data:(image\/[a-z]+);base64,/);
-            const mimeType = mimeMatch ? mimeMatch[1] : "image/jpeg";
-            const b64Data = commaIdx !== -1 ? base64Image.substring(commaIdx + 1) : base64Image;
-            parts.push({ inlineData: { mimeType: mimeType, data: b64Data } });
-        }
-
-        const payload = { contents: [{ parts: parts }] };
-        
-        const delays = [1000, 2000, 4000, 8000, 16000];
-        for (let i = 0; i < maxRetries; i++) {
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                
-                if (!response.ok) {
-                    let errMsg = `HTTP Error ${response.status}`;
-                    try { const errData = await response.json(); errMsg = errData.error.message; } catch(e) {}
-                    throw new Error(errMsg);
-                }
-                const data = await response.json();
-                return data.candidates[0].content.parts[0].text;
-            } catch (e) {
-                if (e.message === "API_KEY_MISSING" || e.message.includes("API key not valid") || i === maxRetries - 1) throw e;
-                await new Promise(res => setTimeout(res, delays[i]));
-            }
-        }
-    }
-
-    function showAiMessage(msg, isError = false) {
-        const msgBox = document.getElementById('ai-message');
-        msgBox.style.display = 'block';
-        msgBox.style.color = isError ? 'var(--color-fat)' : '#fff';
-        msgBox.innerText = msg;
-    }
-
-    async function aiAutoLog() {
-        if (!appData.geminiApiKey && (!envApiKey || envApiKey === "")) {
-            navTo('settings');
-            return showAiMessage("Please add your free Gemini API Key in Settings first!", true);
-        }
-
-        const input = document.getElementById('ai-input').value;
-        if(!input) return showAiMessage("Please describe what you ate first!", true);
-        
-        document.getElementById('ai-loading').style.display = 'block';
-        document.getElementById('ai-loading').innerText = '✨ Parsing food magically...';
-        document.getElementById('ai-message').style.display = 'none';
-
-        const schema = {
-            type: "OBJECT",
-            properties: {
-                foods: {
-                    type: "ARRAY",
-                    items: {
-                        type: "OBJECT",
-                        properties: {
-                            name: { type: "STRING" },
-                            emoji: { type: "STRING" },
-                            weight: { type: "NUMBER", description: "Base serving size in grams" },
-                            calories: { type: "NUMBER" },
-                            protein: { type: "NUMBER" },
-                            carbs: { type: "NUMBER" },
-                            fat: { type: "NUMBER" },
-                            servings: { type: "NUMBER", description: "How many base servings the user ate" },
-                            category: { type: "STRING", description: "Fruits, Vegetables, Meats, Dairy, Breads, Grains, Fats, Other" }
-                        },
-                        required: ["name", "emoji", "weight", "calories", "protein", "carbs", "fat", "servings", "category"]
-                    }
-                }
-            },
-            required: ["foods"]
-        };
-
-        try {
-            const result = await fetchGeminiWithRetry(`You are a nutrition expert. Parse this food description: "${input}". Return realistic nutritional data for each distinct food item mentioned.`, schema);
-            
-            result.foods.forEach(f => {
-                const newId = 'ai_' + Date.now() + Math.floor(Math.random()*1000);
-                const newFood = {
-                    id: newId,
-                    name: f.name + ' ✨',
-                    weight: f.weight,
-                    calories: f.calories,
-                    protein: f.protein,
-                    carbs: f.carbs,
-                    fat: f.fat,
-                    category: f.category || 'Other',
-                    photoType: 'emoji',
-                    photo: f.emoji || '🍽️'
-                };
-                appData.foods.push(newFood);
-                addDraftItem(newId, f.servings);
-            });
-            
-            document.getElementById('ai-input').value = '';
-            document.getElementById('draft-meal-name').value = '✨ AI Logged Meal';
-            saveData();
-            renderAll();
-            showAiMessage("✨ Successfully logged foods! Scroll down to tweak servings and save your meal.");
-            
-        } catch (err) {
-            console.error(err);
-            if(err.message === "API_KEY_MISSING") {
-                navTo('settings');
-                showAiMessage("Please add your Gemini API Key in Settings first!", true);
-            } else {
-                showAiMessage(`Error: ${err.message}. Please check your API key and try again.`, true);
-            }
-        } finally {
-            document.getElementById('ai-loading').style.display = 'none';
-        }
-    }
-
-    async function aiAsk() {
-        if (!appData.geminiApiKey && (!envApiKey || envApiKey === "")) {
-            navTo('settings');
-            return showAiMessage("Please add your free Gemini API Key in Settings first!", true);
-        }
-
-        const input = document.getElementById('ai-input').value;
-        const imgData = document.getElementById('ai-img-data').value;
-        
-        if(!input && !imgData) return showAiMessage("Please ask a question or upload a photo first!", true);
-
-        document.getElementById('ai-loading').style.display = 'block';
-        document.getElementById('ai-loading').innerText = '✨ Analyzing...';
-        document.getElementById('ai-message').style.display = 'none';
-
-        try {
-            const result = await fetchGeminiChat(input || "Can you estimate the macros for this food?", imgData);
-            showAiMessage("💬 " + result);
-        } catch (err) {
-            console.error(err);
-            if(err.message === "API_KEY_MISSING") {
-                navTo('settings');
-                showAiMessage("Please add your Gemini API Key in Settings first!", true);
-            } else {
-                showAiMessage(`Error: ${err.message}. Please check your API key and try again.`, true);
-            }
-        } finally {
-            document.getElementById('ai-loading').style.display = 'none';
-        }
-    }
-
-    // --- QUICK ADD (ONE-TIME) ---
-    function saveQuickAdd() {
-        const name = document.getElementById('qa-name').value || 'Quick Item';
-        const cal = Number(document.getElementById('qa-cal').value) || 0;
-        const pro = Number(document.getElementById('qa-pro').value) || 0;
-        const carbs = Number(document.getElementById('qa-carbs').value) || 0;
-        const fat = Number(document.getElementById('qa-fat').value) || 0;
-
-        const newId = 'quick_' + Date.now();
-        const newFood = {
-            id: newId,
-            name: name,
-            weight: 1, // acts as 1 serving
-            calories: cal,
-            protein: pro,
-            carbs: carbs,
-            fat: fat,
-            category: 'Other',
-            photoType: 'emoji',
-            photo: '⚡',
-            isHidden: true // This prevents it from showing in the library/grid
-        };
-
-        appData.foods.push(newFood);
-        addDraftItem(newId, 1);
-        
-        // Reset modal inputs
-        document.getElementById('qa-name').value = '';
-        document.getElementById('qa-cal').value = '0';
-        document.getElementById('qa-pro').value = '0';
-        document.getElementById('qa-carbs').value = '0';
-        document.getElementById('qa-fat').value = '0';
-
-        closeModal('quick-add-modal');
-    }
-
-    // --- INITIALIZATION ---
+    // --- INIT ---
     function initApp() {
         const saved = localStorage.getItem('chiral_appData');
         if (saved) {
             try { appData = { ...appData, ...JSON.parse(saved) }; } catch(e){}
+            if(!appData.chatHistory) appData.chatHistory = [];
         }
-        
-        if (!appData.currentDate) {
-            appData.currentDate = getTodayStr();
-        }
-
+        if (!appData.currentDate) appData.currentDate = getTodayStr();
         ensureDayExists(appData.currentDate);
         saveData();
         
-        // Restore API Key in Settings if saved
         if (appData.geminiApiKey) {
             document.getElementById('settings-api-key').value = appData.geminiApiKey;
-            // Pre-fill the model dropdown if one is saved
             if (appData.geminiModel) {
                 document.getElementById('settings-model-name').innerHTML = `<option value="${appData.geminiModel}">${appData.geminiModel}</option>`;
             }
         }
-
-        updateLogoUI();
+        
         renderAll();
+        renderChatHistory();
     }
 
     function getTodayStr() {
-        const d = new Date();
-        return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+        const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
     }
 
     function ensureDayExists(dateStr) {
         if (!appData.days[dateStr]) {
-            const d = new Date(dateStr + "T12:00:00"); // Avoid timezone shift
-            const dayOfWeek = d.getDay(); // 0(Sun) - 6(Sat)
-            const goalType = appData.weekPlan[dayOfWeek] || 'REST';
-            appData.days[dateStr] = {
-                date: dateStr,
-                goalType: goalType,
-                meals: []
-            };
+            const d = new Date(dateStr + "T12:00:00");
+            const dayOfWeek = d.getDay();
+            appData.days[dateStr] = { date: dateStr, goalType: appData.weekPlan[dayOfWeek] || 'REST', meals: [] };
         }
     }
 
-    function saveData() {
-        localStorage.setItem('chiral_appData', JSON.stringify(appData));
-        updateGlobalUI();
-    }
-
-    // --- CORE UI UPDATES ---
-    function updateGlobalUI() {
-        const day = appData.days[appData.currentDate];
-        const goal = appData.goals[day.goalType];
-        
-        // Header Label
-        document.getElementById('header-goal-label').textContent = day.goalType.replace('_', ' + ');
-
-        // Calculate Totals
-        let totals = { cal:0, pro:0, carbs:0, fat:0 };
-        day.meals.forEach(m => {
-            m.items.forEach(i => {
-                const food = appData.foods.find(f => f.id === i.foodId);
-                if(food) {
-                    totals.cal += (food.calories * i.servings);
-                    totals.pro += (food.protein * i.servings);
-                    totals.carbs += (food.carbs * i.servings);
-                    totals.fat += (food.fat * i.servings);
-                }
-            });
-        });
-
-        // Update Footer
-        document.getElementById('foot-cal').textContent = Math.round(totals.cal);
-        document.getElementById('foot-goal-cal').textContent = ' / ' + Math.round(goal.calories);
-        
-        document.getElementById('foot-pro').textContent = Math.round(totals.pro);
-        document.getElementById('foot-goal-pro').textContent = ' / ' + Math.round(goal.protein);
-        
-        document.getElementById('foot-carbs').textContent = Math.round(totals.carbs);
-        document.getElementById('foot-goal-carbs').textContent = ' / ' + Math.round(goal.carbs);
-        
-        document.getElementById('foot-fat').textContent = Math.round(totals.fat);
-        document.getElementById('foot-goal-fat').textContent = ' / ' + Math.round(goal.fat);
-
-        // Update Progress Bars
-        const pCal = Math.min(100, (totals.cal / goal.calories) * 100) || 0;
-        const pPro = Math.min(100, (totals.pro / goal.protein) * 100) || 0;
-        const pCarbs = Math.min(100, (totals.carbs / goal.carbs) * 100) || 0;
-        const pFat = Math.min(100, (totals.fat / goal.fat) * 100) || 0;
-
-        document.getElementById('pbar-cal').style.width = pCal + '%';
-        document.getElementById('pbar-pro').style.width = pPro + '%';
-        document.getElementById('pbar-carbs').style.width = pCarbs + '%';
-        document.getElementById('pbar-fat').style.width = pFat + '%';
-    }
-
-    function renderAll() {
-        renderFoodGrid();
-        renderDraftMeal();
-        renderTodayMeals();
-        renderEditMeals();
-        renderFoodLibrary();
-        renderGoalsPlanner();
-        renderHistory();
-        updateGlobalUI();
-    }
+    function saveData() { localStorage.setItem('chiral_appData', JSON.stringify(appData)); updateGlobalUI(); }
 
     // --- NAVIGATION ---
     function toggleSidebar() {
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('sidebar-overlay');
-        sidebar.classList.toggle('active');
-        overlay.classList.toggle('active');
+        document.getElementById('sidebar').classList.toggle('active');
+        document.getElementById('sidebar-overlay').classList.toggle('active');
     }
 
     function navTo(pageId) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById('page-' + pageId).classList.add('active');
-        
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        document.querySelector(`.nav-item[data-page="${pageId}"]`).classList.add('active');
+        const navItem = document.querySelector(`.nav-item[data-page="${pageId}"]`);
+        if(navItem) navItem.classList.add('active');
         
-        toggleSidebar();
+        document.getElementById('sidebar').classList.remove('active');
+        document.getElementById('sidebar-overlay').classList.remove('active');
+        
+        // Hide FAB if on AI page
+        document.getElementById('fab-ai').style.display = (pageId === 'ai') ? 'none' : 'flex';
+        
+        if(pageId === 'daily-log') document.getElementById('daily-log-title').innerText = (appData.currentDate === getTodayStr()) ? "Today's Log" : `Log for ${formatDateFriendly(appData.currentDate)}`;
+        if(pageId === 'ai') scrollToChatBottom();
+
         renderAll();
     }
 
-    // --- LOGO HANDLING ---
-    function updateLogoUI() {
-        const img = document.getElementById('header-logo');
-        const svg = document.getElementById('header-logo-svg');
-        const preview = document.getElementById('settings-logo-preview');
+    // --- UI UPDATES ---
+    function updateGlobalUI() {
+        const day = appData.days[appData.currentDate];
+        const goal = appData.goals[day.goalType];
         
-        if (appData.customLogo) {
-            img.src = appData.customLogo;
-            img.style.display = 'block';
-            svg.style.display = 'none';
-            preview.innerHTML = `<img src="${appData.customLogo}">`;
-        } else {
-            img.style.display = 'none';
-            svg.style.display = 'block';
-            preview.innerHTML = svg.outerHTML;
-        }
+        document.getElementById('header-goal-label').textContent = day.goalType.replace('_', ' + ');
+
+        let tCal=0, tPro=0, tCarbs=0, tFat=0;
+        day.meals.forEach(m => m.items.forEach(i => {
+            const food = appData.foods.find(f => f.id === i.foodId);
+            if(food) { tCal += food.calories * i.servings; tPro += food.protein * i.servings; tCarbs += food.carbs * i.servings; tFat += food.fat * i.servings; }
+        }));
+
+        // Footer Values
+        document.getElementById('foot-cal').textContent = Math.round(tCal); document.getElementById('foot-goal-cal').textContent = ' / ' + Math.round(goal.calories);
+        document.getElementById('foot-pro').textContent = Math.round(tPro); document.getElementById('foot-goal-pro').textContent = ' / ' + Math.round(goal.protein);
+        document.getElementById('foot-carbs').textContent = Math.round(tCarbs); document.getElementById('foot-goal-carbs').textContent = ' / ' + Math.round(goal.carbs);
+        document.getElementById('foot-fat').textContent = Math.round(tFat); document.getElementById('foot-goal-fat').textContent = ' / ' + Math.round(goal.fat);
+
+        // Diff Math (Left or Over)
+        const updateDiff = (id, current, target) => {
+            const diff = target - current;
+            const el = document.getElementById(id);
+            if(diff < 0) { el.textContent = `+${Math.round(Math.abs(diff))} over`; el.style.color = "var(--color-pro)"; }
+            else { el.textContent = `${Math.round(diff)} left`; el.style.color = "var(--color-carbs)"; }
+        };
+        updateDiff('foot-diff-cal', tCal, goal.calories);
+        updateDiff('foot-diff-pro', tPro, goal.protein);
+        updateDiff('foot-diff-carbs', tCarbs, goal.carbs);
+        updateDiff('foot-diff-fat', tFat, goal.fat);
+
+        // Progress Bars
+        document.getElementById('pbar-cal').style.width = Math.min(100, (tCal / goal.calories) * 100) + '%';
+        document.getElementById('pbar-pro').style.width = Math.min(100, (tPro / goal.protein) * 100) + '%';
+        document.getElementById('pbar-carbs').style.width = Math.min(100, (tCarbs / goal.carbs) * 100) + '%';
+        document.getElementById('pbar-fat').style.width = Math.min(100, (tFat / goal.fat) * 100) + '%';
     }
 
-    function handleLogoUpload(e) {
-        const file = e.target.files[0];
-        if(!file) return;
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            appData.customLogo = event.target.result;
-            saveData();
-            updateLogoUI();
-        };
-        reader.readAsDataURL(file);
+    function renderAll() {
+        renderFoodGrid(); renderDraftMeal(); renderDailyLog(); renderFoodLibrary(); renderGoalsPlanner(); renderHistory(); updateGlobalUI();
     }
-    
-    function resetLogo() {
-        appData.customLogo = null;
-        saveData();
-        updateLogoUI();
+
+    function formatDateFriendly(dateStr) {
+        const d = new Date(dateStr + "T12:00:00");
+        return d.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
     }
 
     // --- BUILD MEAL ---
@@ -1481,531 +736,293 @@
         const filterCont = document.getElementById('build-category-filters');
         const query = document.getElementById('build-search').value.toLowerCase();
         
-        // Render Filters
         const cats = ['All', ...new Set(appData.foods.filter(f => !f.isHidden).map(f => f.category))];
-        filterCont.innerHTML = cats.map(c => 
-            `<button class="filter-btn ${c===buildFilter?'active':''}" onclick="setBuildFilter('${c}')">${c}</button>`
-        ).join('');
+        filterCont.innerHTML = cats.map(c => `<button class="filter-btn ${c===buildFilter?'active':''}" onclick="setBuildFilter('${c}')">${c}</button>`).join('');
 
-        // Filter Foods (Exclude hidden ones like Quick Adds)
         let filtered = appData.foods.filter(f => !f.isHidden && f.name.toLowerCase().includes(query));
         if (buildFilter !== 'All') filtered = filtered.filter(f => f.category === buildFilter);
 
-        // Render Grid
         container.innerHTML = filtered.map(f => {
             const serv = draftMealItems[f.id] || 0;
             const badge = serv > 0 ? `<div class="selected-badge">${serv}</div>` : '';
-            const imgHTML = f.photoType === 'photo' 
-                ? `<img src="${f.photo}">` 
-                : f.photo; // emoji
-                
-            return `
-            <div class="card food-card">
-                ${badge}
-                <div class="food-img-wrapper">${imgHTML}</div>
-                <div class="food-name">${f.name}</div>
-                <div class="food-macros-tiny">${Math.round(f.calories)}c • ${Math.round(f.protein)}p</div>
-                <div class="food-actions">
-                    <button onclick="addDraftItem('${f.id}', -1)">-1</button>
-                    <button onclick="addDraftItem('${f.id}', 0.5)">.5</button>
-                    <button onclick="addDraftItem('${f.id}', 1)">+1</button>
-                </div>
-            </div>`;
+            const imgHTML = f.photoType === 'photo' ? `<img src="${f.photo}">` : f.photo;
+            return `<div class="card food-card">${badge}<div class="food-img-wrapper">${imgHTML}</div>
+                <div class="food-name">${f.name}</div><div class="food-macros-tiny">${Math.round(f.calories)}c • ${Math.round(f.protein)}p</div>
+                <div class="food-actions"><button onclick="addDraftItem('${f.id}', -1)">-1</button><button onclick="addDraftItem('${f.id}', 0.5)">.5</button><button onclick="addDraftItem('${f.id}', 1)">+1</button></div></div>`;
         }).join('');
     }
-
     function setBuildFilter(cat) { buildFilter = cat; renderFoodGrid(); }
-
-    function addDraftItem(foodId, amount) {
-        if (!draftMealItems[foodId]) draftMealItems[foodId] = 0;
-        draftMealItems[foodId] += amount;
-        if (draftMealItems[foodId] <= 0) delete draftMealItems[foodId];
-        renderFoodGrid();
-        renderDraftMeal();
-    }
+    function addDraftItem(id, amt) { draftMealItems[id] = (draftMealItems[id]||0)+amt; if(draftMealItems[id]<=0) delete draftMealItems[id]; renderFoodGrid(); renderDraftMeal(); }
 
     function renderDraftMeal() {
         const area = document.getElementById('selected-items-area');
-        const list = document.getElementById('selected-items-list');
-        const macroDisplay = document.getElementById('draft-meal-macros');
-        
         const keys = Object.keys(draftMealItems);
-        if (keys.length === 0) {
-            area.style.display = 'none';
-            return;
-        }
+        if (keys.length === 0) return area.style.display = 'none';
         area.style.display = 'block';
 
-        let tCal=0, tPro=0, tCarbs=0, tFat=0;
-        let html = '';
-
+        let tCal=0, tPro=0, tCarbs=0, tFat=0, html='';
         keys.forEach(id => {
-            const food = appData.foods.find(f => f.id === id);
-            if(!food) return;
+            const food = appData.foods.find(f => f.id === id); if(!food) return;
             const serv = draftMealItems[id];
-            
-            tCal += food.calories * serv;
-            tPro += food.protein * serv;
-            tCarbs += food.carbs * serv;
-            tFat += food.fat * serv;
-
-            html += `
-            <div class="selected-list-item">
-                <div class="info">
-                    <div class="name">${food.name}</div>
-                    <div class="sub">${serv} servings • ${Math.round(food.calories*serv)} cal</div>
-                </div>
-                <div class="controls">
-                    <button onclick="addDraftItem('${id}', -0.5)">-</button>
-                    <span style="font-size:14px; font-weight:bold; width:20px; text-align:center;">${serv}</span>
-                    <button onclick="addDraftItem('${id}', 0.5)" style="background:var(--color-accent)">+</button>
-                </div>
-            </div>`;
+            tCal+=food.calories*serv; tPro+=food.protein*serv; tCarbs+=food.carbs*serv; tFat+=food.fat*serv;
+            html += `<div class="selected-list-item"><div class="info"><div class="name">${food.name}</div><div class="sub">${serv} servings • ${Math.round(food.calories*serv)} cal</div></div>
+                <div class="controls"><button onclick="addDraftItem('${id}', -0.5)">-</button><span style="font-size:14px;font-weight:bold;width:20px;text-align:center;">${serv}</span><button onclick="addDraftItem('${id}', 0.5)" style="background:var(--color-cal)">+</button></div></div>`;
         });
-
-        list.innerHTML = html;
-        macroDisplay.innerHTML = `
+        document.getElementById('selected-items-list').innerHTML = html;
+        document.getElementById('draft-meal-macros').innerHTML = `
             <div><div class="val c-cal">${Math.round(tCal)}</div><div class="lbl">Cal</div></div>
             <div><div class="val c-pro">${Math.round(tPro)}</div><div class="lbl">Pro</div></div>
             <div><div class="val c-carbs">${Math.round(tCarbs)}</div><div class="lbl">Carbs</div></div>
-            <div><div class="val c-fat">${Math.round(tFat)}</div><div class="lbl">Fat</div></div>
-        `;
+            <div><div class="val c-fat">${Math.round(tFat)}</div><div class="lbl">Fat</div></div>`;
     }
-
-    function resetDraftMeal() {
-        draftMealItems = {};
-        document.getElementById('draft-meal-name').value = '';
-        document.getElementById('draft-meal-notes').value = '';
-        renderFoodGrid();
-        renderDraftMeal();
-    }
-
+    function resetDraftMeal() { draftMealItems={}; document.getElementById('draft-meal-name').value=''; document.getElementById('draft-meal-notes').value=''; renderFoodGrid(); renderDraftMeal(); }
     function saveDraftMeal() {
-        if (Object.keys(draftMealItems).length === 0) return;
-        
+        if(Object.keys(draftMealItems).length===0) return;
         const day = appData.days[appData.currentDate];
         const mealName = document.getElementById('draft-meal-name').value || `Meal ${day.meals.length + 1}`;
         const notes = document.getElementById('draft-meal-notes').value;
-        const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-
         const items = Object.entries(draftMealItems).map(([foodId, servings]) => ({foodId, servings}));
-
-        day.meals.push({ name: mealName, notes, time, items });
-        
-        saveData();
-        resetDraftMeal();
-        navTo('today');
+        day.meals.push({ name: mealName, notes, time: new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}), items });
+        saveData(); resetDraftMeal(); navTo('daily-log');
     }
 
-    // --- TODAY & EDIT MEALS ---
-    function generateMealCard(meal, index, isEdit) {
-        let tCal=0, tPro=0, tCarbs=0, tFat=0;
-        let itemNames = [];
-        
-        meal.items.forEach(i => {
-            const food = appData.foods.find(f => f.id === i.foodId);
-            if(food) {
-                tCal += food.calories * i.servings;
-                tPro += food.protein * i.servings;
-                tCarbs += food.carbs * i.servings;
-                tFat += food.fat * i.servings;
-                itemNames.push(`${food.name} (${i.servings})`);
-            }
-        });
-
-        const clickAction = isEdit ? `onclick="openEditMeal(${index})"` : '';
-        const cursor = isEdit ? 'cursor:pointer;' : '';
-
-        return `
-        <div class="card" ${clickAction} style="${cursor}">
-            <div class="meal-card-header">
-                <div class="meal-card-title">${meal.name}</div>
-                <div class="meal-card-time">${meal.time}</div>
-            </div>
-            <div class="meal-card-desc">${itemNames.join(', ')}</div>
-            ${meal.notes ? `<div class="meal-card-desc" style="font-style:italic;">"${meal.notes}"</div>` : ''}
-            <div class="macro-grid-small">
-                <div><div class="val c-cal">${Math.round(tCal)}</div><div class="lbl">Cal</div></div>
-                <div><div class="val c-pro">${Math.round(tPro)}</div><div class="lbl">Pro</div></div>
-                <div><div class="val c-carbs">${Math.round(tCarbs)}</div><div class="lbl">Carbs</div></div>
-                <div><div class="val c-fat">${Math.round(tFat)}</div><div class="lbl">Fat</div></div>
-            </div>
-        </div>`;
-    }
-
-    function renderTodayMeals() {
-        const cont = document.getElementById('today-meals-list');
+    // --- DAILY LOG (Merged Today & Edit Meals) ---
+    function renderDailyLog() {
+        const cont = document.getElementById('daily-meals-list');
         const day = appData.days[appData.currentDate];
+        if (!day || day.meals.length === 0) { cont.innerHTML = `<div class="empty-state"><div class="empty-icon">🍽️</div><div>No meals logged on this date.</div></div>`; return; }
         
-        if (!day || day.meals.length === 0) {
-            cont.innerHTML = `<div class="empty-state"><div class="empty-icon">🍽️</div><div>No meals logged yet.</div></div>`;
-            return;
-        }
-        cont.innerHTML = day.meals.map((m, i) => generateMealCard(m, i, false)).join('');
-    }
-
-    function renderEditMeals() {
-        const cont = document.getElementById('edit-meals-list');
-        const day = appData.days[appData.currentDate];
-        
-        if (!day || day.meals.length === 0) {
-            cont.innerHTML = `<div class="empty-state"><div>No meals to edit.</div></div>`;
-            return;
-        }
-        cont.innerHTML = day.meals.map((m, i) => generateMealCard(m, i, true)).join('');
-    }
-
-    // --- EDIT MEAL MODAL ---
-    function openEditMeal(index) {
-        const meal = appData.days[appData.currentDate].meals[index];
-        editMealCache = JSON.parse(JSON.stringify(meal)); // deep copy
-        document.getElementById('edit-meal-index').value = index;
-        document.getElementById('edit-meal-name').value = meal.name;
-        
-        renderEditMealItems();
-        document.getElementById('edit-meal-modal').classList.add('active');
-    }
-
-    function renderEditMealItems() {
-        const list = document.getElementById('edit-meal-items-list');
-        list.innerHTML = editMealCache.items.map((it, i) => {
-            const food = appData.foods.find(f => f.id === it.foodId);
+        cont.innerHTML = day.meals.map((meal, index) => {
+            let tCal=0, tPro=0, tCarbs=0, tFat=0, itemNames=[];
+            meal.items.forEach(i => {
+                const food = appData.foods.find(f => f.id === i.foodId);
+                if(food) { tCal+=food.calories*i.servings; tPro+=food.protein*i.servings; tCarbs+=food.carbs*i.servings; tFat+=food.fat*i.servings; itemNames.push(`${food.name} (${i.servings})`); }
+            });
             return `
-            <div class="selected-list-item">
-                <div class="info"><div class="name">${food?food.name:'Unknown'}</div></div>
-                <div class="controls">
-                    <button onclick="adjEditMealItem(${i}, -0.5)">-</button>
-                    <span style="font-size:14px; font-weight:bold; width:20px; text-align:center;">${it.servings}</span>
-                    <button onclick="adjEditMealItem(${i}, 0.5)" style="background:var(--color-accent)">+</button>
+            <div class="card" onclick="openEditMeal(${index})" style="cursor:pointer; border-left: 4px solid var(--color-cal);">
+                <div class="meal-card-header"><div class="meal-card-title">${meal.name}</div><div class="meal-card-time">${meal.time}</div></div>
+                <div class="meal-card-desc">${itemNames.join(', ')}</div>
+                ${meal.notes ? `<div class="meal-card-desc" style="font-style:italic;">"${meal.notes}"</div>` : ''}
+                <div class="macro-grid-small">
+                    <div><div class="val c-cal">${Math.round(tCal)}</div><div class="lbl">Cal</div></div>
+                    <div><div class="val c-pro">${Math.round(tPro)}</div><div class="lbl">Pro</div></div>
+                    <div><div class="val c-carbs">${Math.round(tCarbs)}</div><div class="lbl">Carbs</div></div>
+                    <div><div class="val c-fat">${Math.round(tFat)}</div><div class="lbl">Fat</div></div>
                 </div>
             </div>`;
         }).join('');
     }
 
-    function adjEditMealItem(idx, amount) {
-        editMealCache.items[idx].servings += amount;
-        if (editMealCache.items[idx].servings <= 0) {
-            editMealCache.items.splice(idx, 1);
-        }
-        renderEditMealItems();
+    function openEditMeal(index) {
+        const meal = appData.days[appData.currentDate].meals[index];
+        editMealCache = JSON.parse(JSON.stringify(meal)); 
+        document.getElementById('edit-meal-index').value = index;
+        document.getElementById('edit-meal-name').value = meal.name;
+        renderEditMealItems(); document.getElementById('edit-meal-modal').classList.add('active');
     }
-
-    function saveEditedMeal() {
-        const idx = document.getElementById('edit-meal-index').value;
-        editMealCache.name = document.getElementById('edit-meal-name').value;
-        appData.days[appData.currentDate].meals[idx] = editMealCache;
-        saveData();
-        closeModal('edit-meal-modal');
-        renderAll();
+    function renderEditMealItems() {
+        document.getElementById('edit-meal-items-list').innerHTML = editMealCache.items.map((it, i) => {
+            const f = appData.foods.find(x => x.id === it.foodId);
+            return `<div class="selected-list-item"><div class="info"><div class="name">${f?f.name:'Unknown'}</div></div>
+                <div class="controls"><button onclick="adjEditMealItem(${i}, -0.5)">-</button><span style="font-size:14px;font-weight:bold;width:20px;text-align:center;">${it.servings}</span><button onclick="adjEditMealItem(${i}, 0.5)" style="background:var(--color-cal)">+</button></div></div>`;
+        }).join('');
     }
+    function adjEditMealItem(idx, amt) { editMealCache.items[idx].servings+=amt; if(editMealCache.items[idx].servings<=0) editMealCache.items.splice(idx,1); renderEditMealItems(); }
+    function saveEditedMeal() { appData.days[appData.currentDate].meals[document.getElementById('edit-meal-index').value] = editMealCache; editMealCache.name=document.getElementById('edit-meal-name').value; saveData(); closeModal('edit-meal-modal'); renderAll(); }
+    function deleteMeal() { if(confirm("Delete this meal?")){ appData.days[appData.currentDate].meals.splice(document.getElementById('edit-meal-index').value, 1); saveData(); closeModal('edit-meal-modal'); renderAll(); } }
 
-    function deleteMeal() {
-        if(confirm("Delete this meal?")) {
-            const idx = document.getElementById('edit-meal-index').value;
-            appData.days[appData.currentDate].meals.splice(idx, 1);
-            saveData();
-            closeModal('edit-meal-modal');
-            renderAll();
-        }
-    }
-
-    // --- FOOD LIBRARY & MODAL ---
-    function renderFoodLibrary() {
-        const cont = document.getElementById('lib-food-list');
-        const query = document.getElementById('lib-search').value.toLowerCase();
-        
-        // Exclude hidden foods from the library
-        let filtered = appData.foods.filter(f => !f.isHidden && f.name.toLowerCase().includes(query));
-        
-        cont.innerHTML = filtered.map(f => `
-        <div class="card" style="display:flex; align-items:center; gap:12px; cursor:pointer;" onclick="openFoodModal('${f.id}')">
-            <div class="food-img-wrapper" style="margin:0; width:40px; height:40px; font-size:20px;">
-                ${f.photoType === 'photo' ? `<img src="${f.photo}">` : f.photo}
-            </div>
-            <div style="flex:1;">
-                <div style="font-weight:600; font-size:14px;">${f.name}</div>
-                <div style="font-size:11px; color:var(--text-secondary);">${f.weight}g • ${f.calories}c ${f.protein}p ${f.carbs}c ${f.fat}f</div>
-            </div>
-        </div>`).join('');
-    }
-
-    function setPhotoType(type) {
-        document.getElementById('tgl-emoji').classList.remove('active');
-        document.getElementById('tgl-photo').classList.remove('active');
-        document.getElementById(`tgl-${type}`).classList.add('active');
-        
-        if(type === 'emoji') {
-            document.getElementById('food-emoji-area').style.display = 'block';
-            document.getElementById('food-photo-area').style.display = 'none';
-        } else {
-            document.getElementById('food-emoji-area').style.display = 'none';
-            document.getElementById('food-photo-area').style.display = 'block';
-        }
-    }
-
-    function handleFoodPhotoUpload(e) {
-        const file = e.target.files[0];
-        if(!file) return;
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            const dataUrl = event.target.result;
-            document.getElementById('food-photo-data').value = dataUrl;
-            document.getElementById('food-photo-preview').innerHTML = `<img src="${dataUrl}">`;
-        };
-        reader.readAsDataURL(file);
-    }
-
-    function openFoodModal(id = null) {
-        document.getElementById('food-modal').classList.add('active');
-        document.getElementById('btn-del-food').style.display = id ? 'block' : 'none';
-        
-        if (id) {
-            const f = appData.foods.find(x => x.id === id);
-            document.getElementById('food-modal-title').innerText = "Edit Food";
-            document.getElementById('food-id').value = f.id;
-            document.getElementById('food-name').value = f.name;
-            document.getElementById('food-weight').value = f.weight;
-            document.getElementById('food-cal').value = f.calories;
-            document.getElementById('food-pro').value = f.protein;
-            document.getElementById('food-carbs').value = f.carbs;
-            document.getElementById('food-fat').value = f.fat;
-            document.getElementById('food-category').value = f.category;
-            
-            setPhotoType(f.photoType || 'emoji');
-            if (f.photoType === 'photo') {
-                document.getElementById('food-photo-data').value = f.photo;
-                document.getElementById('food-photo-preview').innerHTML = `<img src="${f.photo}">`;
-                document.getElementById('food-emoji-input').value = '🍽️';
-            } else {
-                document.getElementById('food-emoji-input').value = f.photo || '🍽️';
-                document.getElementById('food-photo-data').value = '';
-                document.getElementById('food-photo-preview').innerHTML = `🖼️`;
-            }
-        } else {
-            document.getElementById('food-modal-title').innerText = "Add New Food";
-            document.getElementById('food-id').value = '';
-            document.getElementById('food-name').value = '';
-            document.getElementById('food-weight').value = 100;
-            document.getElementById('food-cal').value = '';
-            document.getElementById('food-pro').value = '';
-            document.getElementById('food-carbs').value = '';
-            document.getElementById('food-fat').value = '';
-            
-            setPhotoType('emoji');
-            document.getElementById('food-emoji-input').value = '🍽️';
-            document.getElementById('food-photo-data').value = '';
-            document.getElementById('food-photo-preview').innerHTML = `🖼️`;
-        }
-    }
-
-    function saveFood() {
-        const id = document.getElementById('food-id').value || Date.now().toString();
-        const pType = document.getElementById('tgl-photo').classList.contains('active') ? 'photo' : 'emoji';
-        
-        const newFood = {
-            id: id,
-            name: document.getElementById('food-name').value || 'Unnamed Food',
-            weight: Number(document.getElementById('food-weight').value) || 100,
-            calories: Number(document.getElementById('food-cal').value) || 0,
-            protein: Number(document.getElementById('food-pro').value) || 0,
-            carbs: Number(document.getElementById('food-carbs').value) || 0,
-            fat: Number(document.getElementById('food-fat').value) || 0,
-            category: document.getElementById('food-category').value,
-            photoType: pType,
-            photo: pType === 'photo' ? document.getElementById('food-photo-data').value : document.getElementById('food-emoji-input').value
-        };
-
-        const idx = appData.foods.findIndex(x => x.id === id);
-        if (idx >= 0) appData.foods[idx] = newFood;
-        else appData.foods.push(newFood);
-
-        saveData();
-        closeModal('food-modal');
-        renderAll();
-    }
-
-    function deleteFood() {
-        if(confirm("Delete this food? It will remain in past meals but vanish from library.")) {
-            const id = document.getElementById('food-id').value;
-            appData.foods = appData.foods.filter(x => x.id !== id);
-            saveData();
-            closeModal('food-modal');
-            renderAll();
-        }
-    }
-
-    // --- GOALS & PLANNER ---
-    function renderGoalsPlanner() {
-        // Render current tab goals
-        const g = appData.goals[currentGoalTab];
-        document.getElementById('goal-cal').value = g.calories;
-        document.getElementById('goal-pro').value = g.protein;
-        document.getElementById('goal-carbs').value = g.carbs;
-        document.getElementById('goal-fat').value = g.fat;
-
-        // Render week planner
-        const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-        let html = '';
-        for(let i=0; i<7; i++) {
-            const sel = appData.weekPlan[i];
-            html += `
-            <div class="week-grid">
-                <div class="week-day">${days[i]}</div>
-                <select onchange="updateWeekPlan(${i}, this.value)">
-                    <option value="GYM_POOL" ${sel==='GYM_POOL'?'selected':''}>GYM + POOL</option>
-                    <option value="GYM" ${sel==='GYM'?'selected':''}>GYM</option>
-                    <option value="POOL" ${sel==='POOL'?'selected':''}>POOL</option>
-                    <option value="REST" ${sel==='REST'?'selected':''}>REST</option>
-                </select>
-            </div>`;
-        }
-        document.getElementById('week-planner-list').innerHTML = html;
-    }
-
-    function switchGoalTab(tab) {
-        currentGoalTab = tab;
-        document.querySelectorAll('#goal-tabs .tab').forEach(t => t.classList.remove('active'));
-        event.target.classList.add('active');
-        renderGoalsPlanner();
-    }
-
-    function saveCurrentGoal() {
-        appData.goals[currentGoalTab] = {
-            calories: Number(document.getElementById('goal-cal').value),
-            protein: Number(document.getElementById('goal-pro').value),
-            carbs: Number(document.getElementById('goal-carbs').value),
-            fat: Number(document.getElementById('goal-fat').value)
-        };
-        saveData();
-    }
-
-    function updateWeekPlan(dayIdx, val) {
-        appData.weekPlan[dayIdx] = val;
-        // Also update today's goal if today is that day of week
-        const d = new Date(appData.currentDate + "T12:00:00");
-        if (d.getDay() === dayIdx) {
-            appData.days[appData.currentDate].goalType = val;
-        }
-        saveData();
+    // --- QUICK ADD ---
+    function saveQuickAdd() {
+        const newId = 'quick_' + Date.now();
+        appData.foods.push({ id: newId, name: document.getElementById('qa-name').value||'Quick Item', weight: 1, calories: Number(document.getElementById('qa-cal').value)||0, protein: Number(document.getElementById('qa-pro').value)||0, carbs: Number(document.getElementById('qa-carbs').value)||0, fat: Number(document.getElementById('qa-fat').value)||0, category: 'Other', photoType: 'emoji', photo: '⚡', isHidden: true });
+        addDraftItem(newId, 1);
+        ['qa-name','qa-cal','qa-pro','qa-carbs','qa-fat'].forEach(id => document.getElementById(id).value = id==='qa-name'?'':'0');
+        closeModal('quick-add-modal');
     }
 
     // --- HISTORY ---
     function renderHistory() {
         const cont = document.getElementById('history-list');
         const sortedDays = Object.values(appData.days).sort((a,b) => b.date.localeCompare(a.date));
-        
         cont.innerHTML = sortedDays.map(d => {
             let tCal=0, tPro=0, tCarbs=0, tFat=0;
-            d.meals.forEach(m => {
-                m.items.forEach(i => {
-                    const food = appData.foods.find(f => f.id === i.foodId);
-                    if(food) {
-                        tCal += food.calories * i.servings;
-                        tPro += food.protein * i.servings;
-                        tCarbs += food.carbs * i.servings;
-                        tFat += food.fat * i.servings;
-                    }
-                });
-            });
-
-            const isCurrent = d.date === appData.currentDate;
-            const border = isCurrent ? 'border: 2px solid var(--color-accent);' : '';
-
-            return `
-            <div class="card" style="cursor:pointer; ${border}" onclick="jumpToDate('${d.date}')">
-                <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                    <strong>${d.date}</strong>
-                    <span style="font-size:12px; color:var(--color-accent);">${d.goalType.replace('_','+')}</span>
-                </div>
+            d.meals.forEach(m => m.items.forEach(i => { const f=appData.foods.find(x=>x.id===i.foodId); if(f){tCal+=f.calories*i.servings; tPro+=f.protein*i.servings; tCarbs+=f.carbs*i.servings; tFat+=f.fat*i.servings;} }));
+            const isCurr = d.date === appData.currentDate ? 'border: 2px solid var(--color-cal);' : '';
+            return `<div class="card" style="cursor:pointer; ${isCurr}" onclick="jumpToDate('${d.date}')">
+                <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><strong>${formatDateFriendly(d.date)}</strong><span style="font-size:12px; color:var(--color-accent); font-weight:bold;">${d.goalType.replace('_','+')}</span></div>
                 <div class="macro-grid-small">
-                    <div><div class="val c-cal">${Math.round(tCal)}</div></div>
-                    <div><div class="val c-pro">${Math.round(tPro)}</div></div>
-                    <div><div class="val c-carbs">${Math.round(tCarbs)}</div></div>
-                    <div><div class="val c-fat">${Math.round(tFat)}</div></div>
-                </div>
-            </div>`;
+                    <div><div class="val c-cal">${Math.round(tCal)}</div></div><div><div class="val c-pro">${Math.round(tPro)}</div></div>
+                    <div><div class="val c-carbs">${Math.round(tCarbs)}</div></div><div><div class="val c-fat">${Math.round(tFat)}</div></div>
+                </div></div>`;
         }).join('');
     }
+    function advanceDay() { let d = new Date(appData.currentDate + "T12:00:00"); d.setDate(d.getDate() + 1); appData.currentDate = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; ensureDayExists(appData.currentDate); saveData(); renderAll(); window.scrollTo(0,0); }
+    function jumpToDate(dateStr) { appData.currentDate = dateStr; saveData(); navTo('daily-log'); }
+    function jumpToActualToday() { jumpToDate(getTodayStr()); }
 
-    function advanceDay() {
-        let d = new Date(appData.currentDate + "T12:00:00");
-        d.setDate(d.getDate() + 1);
-        appData.currentDate = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-        ensureDayExists(appData.currentDate);
-        saveData();
-        renderAll();
-        window.scrollTo(0,0);
+    // --- FOOD LIBRARY ---
+    function renderFoodLibrary() {
+        const query = document.getElementById('lib-search').value.toLowerCase();
+        document.getElementById('lib-food-list').innerHTML = appData.foods.filter(f => !f.isHidden && f.name.toLowerCase().includes(query)).map(f => `
+        <div class="card" style="display:flex; align-items:center; gap:12px; cursor:pointer;" onclick="openFoodModal('${f.id}')">
+            <div class="food-img-wrapper" style="margin:0; width:40px; height:40px; font-size:20px;">${f.photoType==='photo'?`<img src="${f.photo}">`:f.photo}</div>
+            <div style="flex:1;"><div style="font-weight:600; font-size:14px;">${f.name}</div><div style="font-size:11px; color:var(--text-secondary);">${f.weight}g • ${f.calories}c ${f.protein}p ${f.carbs}c ${f.fat}f</div></div>
+        </div>`).join('');
     }
-    
-    function jumpToDate(dateStr) {
-        appData.currentDate = dateStr;
-        saveData();
-        navTo('today');
+    function setPhotoType(t) { ['emoji','photo'].forEach(x=>{document.getElementById('tgl-'+x).classList.remove('active'); document.getElementById('food-'+x+'-area').style.display='none';}); document.getElementById('tgl-'+t).classList.add('active'); document.getElementById('food-'+t+'-area').style.display='block'; }
+    function handleFoodPhotoUpload(e) { const r=new FileReader(); r.onload=ev=>{ document.getElementById('food-photo-data').value=ev.target.result; document.getElementById('food-photo-preview').innerHTML=`<img src="${ev.target.result}">`; }; if(e.target.files[0]) r.readAsDataURL(e.target.files[0]); }
+    function openFoodModal(id=null) {
+        document.getElementById('food-modal').classList.add('active'); document.getElementById('btn-del-food').style.display = id?'block':'none';
+        const f = id ? appData.foods.find(x=>x.id===id) : {id:'',name:'',weight:100,calories:'',protein:'',carbs:'',fat:'',category:'Other',photoType:'emoji',photo:'🍽️'};
+        ['id','name','weight','cal','pro','carbs','fat','category'].forEach(k => document.getElementById(`food-${k}`).value = f[k==='cal'?'calories':k]||'');
+        setPhotoType(f.photoType||'emoji');
+        if(f.photoType==='photo'){ document.getElementById('food-photo-data').value=f.photo; document.getElementById('food-photo-preview').innerHTML=`<img src="${f.photo}">`; document.getElementById('food-emoji-input').value='🍽️';}
+        else { document.getElementById('food-emoji-input').value=f.photo||'🍽️'; document.getElementById('food-photo-data').value=''; document.getElementById('food-photo-preview').innerHTML='🖼️'; }
+    }
+    function saveFood() {
+        const pt = document.getElementById('tgl-photo').classList.contains('active') ? 'photo':'emoji';
+        const newF = { id: document.getElementById('food-id').value||Date.now().toString(), name: document.getElementById('food-name').value||'Unnamed', weight: Number(document.getElementById('food-weight').value)||100, calories: Number(document.getElementById('food-cal').value)||0, protein: Number(document.getElementById('food-pro').value)||0, carbs: Number(document.getElementById('food-carbs').value)||0, fat: Number(document.getElementById('food-fat').value)||0, category: document.getElementById('food-category').value, photoType: pt, photo: pt==='photo'?document.getElementById('food-photo-data').value:document.getElementById('food-emoji-input').value };
+        const idx = appData.foods.findIndex(x=>x.id===newF.id); if(idx>=0) appData.foods[idx]=newF; else appData.foods.push(newF);
+        saveData(); closeModal('food-modal'); renderAll();
+    }
+    function deleteFood() { if(confirm("Delete?")){ appData.foods = appData.foods.filter(x=>x.id!==document.getElementById('food-id').value); saveData(); closeModal('food-modal'); renderAll(); } }
+
+    // --- GOALS / SETTINGS ---
+    function renderGoalsPlanner() {
+        const g = appData.goals[currentGoalTab];
+        ['cal','pro','carbs','fat'].forEach(k => document.getElementById(`goal-${k}`).value = g[k==='cal'?'calories':k]);
+        const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        document.getElementById('week-planner-list').innerHTML = days.map((d,i) => `<div class="week-grid"><div class="week-day">${d}</div><select onchange="updateWeekPlan(${i}, this.value)">${['GYM_POOL','GYM','POOL','REST'].map(opt=>`<option value="${opt}" ${appData.weekPlan[i]===opt?'selected':''}>${opt.replace('_','+')}</option>`).join('')}</select></div>`).join('');
+    }
+    function switchGoalTab(tab) { currentGoalTab = tab; document.querySelectorAll('#goal-tabs .tab').forEach(t=>t.classList.remove('active')); event.target.classList.add('active'); renderGoalsPlanner(); }
+    function saveCurrentGoal() { appData.goals[currentGoalTab] = { calories: Number(document.getElementById('goal-cal').value), protein: Number(document.getElementById('goal-pro').value), carbs: Number(document.getElementById('goal-carbs').value), fat: Number(document.getElementById('goal-fat').value) }; saveData(); }
+    function updateWeekPlan(dayIdx, val) { appData.weekPlan[dayIdx] = val; if(new Date(appData.currentDate+"T12:00:00").getDay()===dayIdx) appData.days[appData.currentDate].goalType = val; saveData(); }
+
+    async function fetchAvailableModels() {
+        const key = document.getElementById('settings-api-key').value.trim(); const statusEl = document.getElementById('api-key-status'); const modelSelect = document.getElementById('settings-model-name');
+        if (!key) return;
+        statusEl.style.display = 'block'; statusEl.innerText = "⏳ Fetching models..."; statusEl.style.color = 'var(--color-carbs)';
+        try {
+            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${key}`);
+            if (!res.ok) throw new Error((await res.json()).error?.message || 'Failed key');
+            const data = await res.json();
+            const valid = data.models.filter(m => m.supportedGenerationMethods?.includes('generateContent') && m.name.includes('flash'));
+            if(valid.length===0) throw new Error("No compatible models.");
+            modelSelect.innerHTML = valid.map(m => `<option value="${m.name.replace('models/','')}">${m.name.replace('models/','')}</option>`).join('');
+            if(appData.geminiModel && Array.from(modelSelect.options).some(o=>o.value===appData.geminiModel)) modelSelect.value=appData.geminiModel; else appData.geminiModel=modelSelect.value;
+            appData.geminiApiKey = key; saveData(); statusEl.innerText = "✅ API Key OK!"; statusEl.style.color = 'var(--color-carbs)';
+        } catch (e) { statusEl.innerText = "❌ Error: " + e.message; statusEl.style.color = 'var(--color-pro)'; }
+    }
+    function updateSelectedModel() { appData.geminiModel = document.getElementById('settings-model-name').value; saveData(); }
+
+    // --- AI CHAT SYSTEM ---
+    function attachChatImage(e) {
+        const f = e.target.files[0]; if(!f) return;
+        const r = new FileReader(); r.onload = ev => {
+            document.getElementById('chat-b64-data').value = ev.target.result;
+            document.getElementById('chat-preview-img').src = ev.target.result;
+            document.getElementById('chat-attached-img').style.display = 'block';
+        }; r.readAsDataURL(f);
+    }
+    function removeChatImage() { document.getElementById('chat-b64-data').value=''; document.getElementById('chat-attached-img').style.display='none'; document.getElementById('chat-img-upload').value=''; }
+    function scrollToChatBottom() { const b = document.getElementById('chat-box'); b.scrollTop = b.scrollHeight; }
+
+    function renderChatHistory() {
+        const box = document.getElementById('chat-box');
+        let html = `<div class="chat-bubble chat-ai">Hello! I'm Chiral. I can see your daily macros and food library. What can I help you with today?</div>`;
+        appData.chatHistory.forEach(msg => {
+            const isUser = msg.role === 'user';
+            let inner = msg.text.replace(/\n/g, '<br>');
+            if(isUser && msg.img) inner = `<img src="${msg.img}" class="chat-img-preview"><br>` + inner;
+            html += `<div class="chat-bubble ${isUser ? 'chat-user' : 'chat-ai'}">${inner}</div>`;
+        });
+        box.innerHTML = html;
+        scrollToChatBottom();
     }
 
-    function jumpToActualToday() {
-        jumpToDate(getTodayStr());
-    }
+    function clearAiChat() { appData.chatHistory = []; saveData(); renderChatHistory(); }
 
-    function resetAllData() {
-        if(confirm("WARNING: This will wipe all meals, history, and custom foods. Are you sure?")) {
-            localStorage.removeItem('chiral_appData');
-            location.reload();
+    async function sendChatMessage() {
+        const inputEl = document.getElementById('chat-input');
+        const text = inputEl.value.trim();
+        const imgData = document.getElementById('chat-b64-data').value;
+        
+        let activeKey = appData.geminiApiKey || envApiKey;
+        if (!activeKey) { navTo('settings'); alert("Please add Gemini API Key in settings!"); return; }
+
+        if(!text && !imgData) return;
+
+        // Push User Message
+        appData.chatHistory.push({ role: 'user', text: text, img: imgData });
+        inputEl.value = ''; inputEl.style.height = ''; removeChatImage();
+        renderChatHistory();
+
+        // Show typing indicator
+        const box = document.getElementById('chat-box');
+        const loadingId = 'loading-' + Date.now();
+        box.innerHTML += `<div id="${loadingId}" class="chat-bubble chat-ai" style="opacity:0.6;">Thinking...</div>`;
+        scrollToChatBottom();
+
+        // Build robust API payload
+        const modelName = activeKey === envApiKey ? "gemini-2.5-flash-preview-09-2025" : (appData.geminiModel || "gemini-1.5-flash");
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${activeKey}`;
+        
+        // Construct live context
+        const day = appData.days[appData.currentDate];
+        const goal = appData.goals[day.goalType];
+        let tCal=0, tPro=0, tCarbs=0, tFat=0;
+        day.meals.forEach(m => m.items.forEach(i => { const f=appData.foods.find(x=>x.id===i.foodId); if(f){tCal+=f.calories*i.servings; tPro+=f.protein*i.servings; tCarbs+=f.carbs*i.servings; tFat+=f.fat*i.servings;} }));
+        const libList = appData.foods.filter(f=>!f.isHidden).map(f=>`${f.name}(${Math.round(f.calories)}c,${Math.round(f.protein)}p)`).join('; ');
+        
+        const systemContext = `You are Chiral, a highly personalized nutrition AI. Format neatly, keep answers brief and practical. Avoid markdown bolding ** unless needed.
+Current User Status for Today (${day.goalType}):
+Target: ${goal.calories}cal, ${goal.protein}g pro, ${goal.carbs}g carb, ${goal.fat}g fat.
+Eaten: ${Math.round(tCal)}cal, ${Math.round(tPro)}g pro, ${Math.round(tCarbs)}g carb, ${Math.round(tFat)}g fat.
+Remaining: ${Math.max(0, goal.calories-tCal)}cal, ${Math.max(0, goal.protein-tPro)}g pro.
+Library foods available: ${libList}.`;
+
+        // Format history for Gemini format: {role, parts: [{text}]}
+        let apiContents = [];
+        appData.chatHistory.forEach((msg, idx) => {
+            let parts = [];
+            let msgText = msg.text;
+            // Inject system context into the very first user message of the payload
+            if (idx === 0 && msg.role === 'user') msgText = systemContext + "\n\nUser: " + msgText;
+            
+            parts.push({ text: msgText || " " }); // Gemini fails on empty text
+            
+            if(msg.img && msg.role === 'user') {
+                const mimeMatch = msg.img.match(/^data:(image\/[a-z]+);base64,/);
+                if(mimeMatch) {
+                    const b64Data = msg.img.substring(msg.img.indexOf(',') + 1);
+                    parts.push({ inlineData: { mimeType: mimeMatch[1], data: b64Data } });
+                }
+            }
+            apiContents.push({ role: msg.role === 'user' ? 'user' : 'model', parts: parts });
+        });
+
+        try {
+            const res = await fetch(url, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ contents: apiContents }) });
+            if (!res.ok) throw new Error((await res.json()).error?.message || "API Error");
+            const data = await res.json();
+            const aiText = data.candidates[0].content.parts[0].text;
+            
+            document.getElementById(loadingId).remove();
+            appData.chatHistory.push({ role: 'ai', text: aiText });
+            saveData(); renderChatHistory();
+        } catch (e) {
+            document.getElementById(loadingId).innerText = "Error: " + e.message;
+            document.getElementById(loadingId).style.color = 'var(--color-pro)';
         }
     }
 
-    // --- SETTINGS / UTILS ---
+    // Tools
+    function resetAllData() { if(confirm("Wipe EVERYTHING?")) { localStorage.removeItem('chiral_appData'); location.reload(); } }
+    function exportData() { const a = document.createElement('a'); a.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData)); a.download = `chiral_backup_${getTodayStr()}.json`; document.body.appendChild(a); a.click(); a.remove(); }
     function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
-    function exportData() {
-        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData));
-        const a = document.createElement('a');
-        a.href = dataStr;
-        a.download = `chiral_backup_${getTodayStr()}.json`;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-    }
-
-    // --- PWA SETUP (INLINE) ---
-    function setupPWA() {
-        // 1. Generate Manifest
-        const manifest = {
-            name: "Chiral Macros",
-            short_name: "Chiral",
-            start_url: "./",
-            display: "standalone",
-            background_color: "#121212",
-            theme_color: "#121212",
-            icons: [
-                {
-                    src: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 100 100" style="background:%232c2c2c;"><path d="M 30 50 C 30 20, 70 20, 70 50 C 70 80, 30 80, 30 50 Z" fill="none" stroke="%23fff" stroke-width="6"/><circle cx="20" cy="50" r="8" fill="%23aaa"/><circle cx="80" cy="50" r="8" fill="%23aaa"/></svg>',
-                    sizes: "192x192",
-                    type: "image/svg+xml"
-                }
-            ]
-        };
-        const manifestBlob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
-        document.getElementById('manifest-link').href = URL.createObjectURL(manifestBlob);
-
-        // 2. Generate minimal Service Worker
-        if ('serviceWorker' in navigator) {
-            const swCode = `
-                self.addEventListener('install', (e) => { self.skipWaiting(); });
-                self.addEventListener('activate', (e) => { self.clients.claim(); });
-                self.addEventListener('fetch', (e) => {
-                    e.respondWith(fetch(e.request).catch(() => new Response('Offline mode active.')));
-                });
-            `;
-            const swBlob = new Blob([swCode], {type: 'application/javascript'});
-            navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(err => console.log('SW init fail', err));
-        }
-    }
-
-    // Run
-    setupPWA();
+    // Init
     initApp();
-
 </script>
 </body>
 </html>
